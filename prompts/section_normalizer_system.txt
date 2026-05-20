@@ -30,8 +30,8 @@ All relevant skills, tools, technologies, frameworks, methodologies, preferred q
 experience:
 Job responsibilities, expected work, tasks, ownership areas, collaboration expectations, and work style indicators.
 
-projects:
-Types of projects, domains, technical problem areas, or relevant project domains and technical problem areas implied or explicitly mentioned in the job description.
+general:
+Any important job-related context that does not clearly fit into skills, experience, positions_of_responsibility, or achievements. This may include project themes, domains, responsibilities, company focus, or other useful signals for resume tailoring.
 
 positions_of_responsibility:
 Leadership, teamwork, ownership, communication, initiative, mentoring, or collaboration signals that can influence leadership-related resume sections.

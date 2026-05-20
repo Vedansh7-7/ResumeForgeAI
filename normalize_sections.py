@@ -8,7 +8,7 @@ print("Connecting to local processor via LangChain and normalizing raw JD json..
 final_jd = {
     "technical_skills": [],
     "experience": [],
-    "projects": [],
+    "general": [],
     "positions_of_responsibility": [],
     "achievements": []
 }
