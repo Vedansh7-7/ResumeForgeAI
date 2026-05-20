@@ -7,4 +7,5 @@ requires-python = ">=3.11"
 dependencies = [
     "pypdf>=6.11.0",
     "regex>=2026.5.9",
+    "rich>=15.0.0",
 ]
