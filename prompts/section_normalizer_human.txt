@@ -1,0 +1,13 @@
+Normalize the following job description content into this schema:
+
+{
+  "technical_skills": [],
+  "experience": "",
+  "projects": "",
+  "positions_of_responsibility": "",
+  "achievements": ""
+}
+
+JOB DESCRIPTION:
+----------------
+{jd_text}
