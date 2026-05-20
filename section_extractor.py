@@ -104,7 +104,7 @@ sections = {
 }
 
 # Write JSON
-with open("./processing_files/jd_sections.json", "w", encoding="utf-8") as json_file:
+with open("./processing_files/raw_jd_sections.json", "w", encoding="utf-8") as json_file:
 
     json.dump(
         sections,
