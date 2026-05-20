@@ -38,14 +38,15 @@ for section_name, section_lines in jd_sections.items():
     parsed = json.loads(response.content)
 
     for key, value in parsed.items():
-        if value and key in final_jd:
-            final_jd[key].append(value)
+        if key in final_jd and value:
+            if isinstance(value, list):
+                final_jd[key].extend(value)   # flatten list
+            else:
+                final_jd[key].append(value)
+
 
 # merge + deduplicate
-final_jd = {
-    k: " ".join(dict.fromkeys(v))
-    for k, v in final_jd.items()
-}
+final_jd = {k: " ".join(dict.fromkeys(v)) for k, v in final_jd.items()}
 
 with open(r"processing_files\normalized_jd_sections.json", "w", encoding="utf-8") as f:
     json.dump(final_jd, f, indent=4, ensure_ascii=False)
