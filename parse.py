@@ -5,7 +5,7 @@ def parsePdf(file):
     file = f".\pdf\{file}.pdf"
     reader = PdfReader(file)
     number_of_pages = len(reader.pages)
-    if number_of_pages > 1:
+    if number_of_pages < 1:
         return "No_Pages_Found"
     elif number_of_pages != 1:
         print(f"There are {number_of_pages} pages in pdf.\nReading the first page...\n\n")
