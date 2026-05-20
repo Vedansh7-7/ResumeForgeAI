@@ -15,6 +15,7 @@ def parsePdf(file):
     for i in range(number_of_pages):
         page = reader.pages[i]
         text = page.extract_text()
+        text = text.replace("\uf0b7", "•")
 
         if i == 0:
             # Writing to the file
