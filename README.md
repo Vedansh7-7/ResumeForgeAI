@@ -2,7 +2,7 @@
 
 An AI-powered resume tailoring platform that customises resumes against a Job Description using deterministic parsing, semantic retrieval, local LLMs, and automated PDF rendering — built without relying on black-box generation.
 
-> Runs fully locally. No external AI API dependency required for the core pipeline.
+> JD parsing and normalisation run locally via Ollama + Llama 3.2. Resume section generation uses Groq API.
 
 ---
 
