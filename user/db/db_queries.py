@@ -1,6 +1,6 @@
 """
 All database operations in one place.
-Every page imports from here — no raw SQL anywhere else.
+Every page imports from here, no raw SQL anywhere else.
 """
 
 from user.db.db_connect import get_connection
