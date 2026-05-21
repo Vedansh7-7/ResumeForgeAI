@@ -1,0 +1,65 @@
+import subprocess
+import json
+import os
+from parse import parsePdf
+from LLM.skills import get_skills_section
+from LLM.experience import get_experience_section
+
+# ── User profile (later will come from user/ folder) ──
+USER_SKILLS = """
+Programming: Python, C++, Verilog
+Tools & Frameworks: CustomTkinter, Matplotlib, Numpy, Pandas,
+SciPy, Apache Spark, FAISS, PySpark
+Databases & Data Platforms: Databricks, Delta Lake
+Operating Systems: Windows, Linux
+Data Analysis and ML: ROOT (CERN), RAG, Bayesian inference,
+Feature engineering
+"""
+
+USER_EXPERIENCE = """
+Research Intern | IIT Indore | Jan 2025 – Present
+Worked on Landsat 8 multispectral imagery analysis using Python and Rasterio.
+Processed satellite data for urban land cover classification.
+
+Project: Kirana AI Assistant | BharatBricks Hackathon | 2025
+Built mobile-first POS and inventory management app using Databricks free tier.
+Implemented K-Means clustering for reorder alerts and AI-driven insights.
+"""
+
+def run_llm_pipeline():
+    # Load normalized JD sections produced by section_extractor.py
+    json_path = os.path.join("processing_files", "normalized_jd_sections.json")
+    with open(json_path, "r", encoding="utf-8") as f:
+        jd = json.load(f)
+
+    jd_skills      = jd.get("technical_skills", "")
+    jd_experience  = jd.get("experience", "")
+    jd_general     = jd.get("general", "")
+
+    print("\n===== SKILLS SECTION =====")
+    skills_output = get_skills_section(jd_skills, USER_SKILLS, jd_general)
+    print(skills_output)
+
+    print("\n===== EXPERIENCE SECTION =====")
+    experience_output = get_experience_section(jd_experience, USER_EXPERIENCE, jd_general)
+    print(experience_output)
+
+def main():
+    with open("./processing_files/output.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+    print(f"Characters in the parsed text = {len(content)}")
+
+if __name__ == "__main__":
+    print("Hello from new-project!\n\n")
+    file = input("Enter file name after adding it in the ./pdf: ")
+    result = parsePdf(file)
+
+    if result == r"Extracted into ./processing_files/output.txt":
+        main()
+        # Run section extractor first
+        result = subprocess.run(['python', 'section_extractor.py'], capture_output=True, text=True)
+        print(result.stdout)
+        # Then run LLM pipeline on its output
+        run_llm_pipeline()
+    else:
+        print("Please check your pdf, we are not able to see any pages in it.")
