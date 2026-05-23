@@ -3,7 +3,6 @@ from parse import parsePdf
 
 def main():
     
-    # Reading a file
     with open("./processing_files/output.txt", "r", encoding="utf-8") as file:
         content = file.read()
     print(f"Characters in the parsed text = {len(content)}")
