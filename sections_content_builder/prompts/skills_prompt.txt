@@ -14,12 +14,11 @@ STRICT OUTPUT RULES:
 - Do not copy skill names from JD_SKILLS
 - Do not add explanation, intro, or any text outside the formatted section
 - NEVER copy words from JD_SKILLS directly — only use exact skill names from USER_SKILLS
+- If no skills from a category are relevant to the JD, omit that category entirely
 
 
 Output format:
 Technical Skills
-- Programming: [skills from USER_SKILLS only]
-- Tools & Frameworks: [skills from USER_SKILLS only]
-- Databases & Data Platforms: [skills from USER_SKILLS only]
-- Data Analysis and ML: [skills from USER_SKILLS only]
-- Operating Systems: [skills from USER_SKILLS only]
+- [Category exactly as it appears in USER_SKILLS]: [relevant skills]
+- [repeat for each category that has at least one relevant skill]
+- Omit any category that has zero relevant skills for this JD
