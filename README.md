@@ -253,13 +253,15 @@ pip install streamlit mysql-connector-python python-dotenv pydantic
 pip install groq
 ```
 
-### 4. Install Ollama and pull model
+### 4. Install Ollama and pull model as well as get an Groq API key
 
 Download from [ollama.com](https://ollama.com), then:
 
 ```bash
 ollama pull llama3.2
 ```
+
+for groq API key visit: [Groq API](https://console.groq.com/keys)
 
 ### 5. Set up MySQL
 
@@ -298,10 +300,10 @@ streamlit run app.py
 | LLM JD Normaliser (Llama 3.2) | Done |
 | User Profile System (DB + UI) | Done |
 | Semantic Matching (FAISS) | In Progress |
-| Section-wise Resume Generator (Groq) | In Progress |
+| Section-wise Resume Generator (Groq) | Done |
 | Resume JSON Schema | Done |
-| LaTeX Renderer | Planned |
-| PDF Compilation | Planned |
+| LaTeX Renderer | Done |
+| PDF Compilation | Done |
 
 ---
 
