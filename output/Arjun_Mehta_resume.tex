@@ -1,0 +1,201 @@
+%-------------------------
+% Resume Template
+% Based on IIT Indore format
+% Adapted for Jinja2 dynamic rendering
+%-------------------------
+
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
+
+\urlstyle{same}
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting — small caps with rule underneath
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+%---- Custom Commands ----
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\small{#3}} \\
+        \textit{\small{#2}} & \small{#4} \\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\small{#3}} \\
+        \textit{\small{#2}} & \small{#4} \\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1}, #2 & \textit{\small{#3}}
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=1.5mm]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+
+\newcommand{\resumeItemListStart}{
+    \begin{justify}
+    \begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep, labelsep=1.2mm, itemsep=0mm]
+    \small
+}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+%---- Document Starts ----
+
+\begin{document}
+\fontfamily{cmr}\selectfont
+
+%----------HEADING-----------------
+\begin{tabularx}{\linewidth}{L R}
+  \textbf{\LARGE Arjun Mehta} & +91-9876543210 \\
+Roll No.: 230003086 & \href{mailto:arjun.mehta@gmail.com}{arjun.mehta@gmail.com} \\
+B.Tech & Computer Science and Engineering & \href{https://github.com/arjunmehta}{github.com/arjunmehta} \\
+NIT Bhopal & \href{https://linkedin.com/in/arjunmehta}{linkedin.com/in/arjunmehta} \\
+\end{tabularx}
+\vspace{-2mm}
+
+%-----------EDUCATION-----------------
+\section{Education}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {B.Tech}{NIT Bhopal}
+    {}{ -- }
+    \vspace{-1mm}
+    {\small \hspace{4mm} CGPA/Percentage: \textbf{8.9 CGPA}}
+    \vspace{1mm}
+\resumeSubHeadingListEnd
+\vspace{-5mm}
+
+%-----------EXPERIENCE-----------------
+\section{Experience}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Arihant Capital Markets}{Data Science Intern}
+    {May 2024 - Jul 2024}{Indore, India}
+    \resumeItemListStart
+      \item {Developed a retrieval-augmented generation system for academic paper summarization using FAISS and Sentence Transformers}
+      \item {Preprocessed and analysed 12,000 research abstracts using Python and Pandas for downstream ML tasks}
+      \item {Built evaluation scripts to benchmark retrieval accuracy across chunking and embedding configurations}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+%-----------PROJECTS-----------------
+\section{Projects}
+\resumeSubHeadingListStart
+  \resumeProject
+    {AI Resume Tailor}
+    {Self-led}
+    {Jan 2026 - Present}
+    {\href{github.com/arjunmehta/ai-resume-tailor}{Github}}
+    \resumeItemListStart
+      \item {Built an AI-powered resume tailoring platform that parses JD PDFs using RegEx and Llama 3.2 locally}
+      \item {Implemented FAISS-based semantic matching to score JD-to-profile similarity}
+      \item {Designed a multi-user profile memory system with Streamlit and MySQL}
+    \resumeItemListEnd
+  \resumeProject
+    {Sentiment Analysis Engine}
+    {Self-led}
+    {Oct 2024}
+    {\href{github.com/arjunmehta/sentiment-engine}{Github}}
+    \resumeItemListStart
+      \item {Built NLP sentiment classifier using TF-IDF vectorisation and logistic regression on 50,000 Amazon reviews}
+      \item {Handled class imbalance using SMOTE achieving 89 percent accuracy on test set}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+%-----------TECHNICAL SKILLS-----------------
+\section{Technical Skills}
+\resumeHeadingSkillStart
+  \item \textbf{Languages: }Python, SQL, C++
+  \item \textbf{ML and AI: }Scikit-learn, TensorFlow, PyTorch, XGBoost, FAISS
+  \item \textbf{NLP: }NLTK, TF-IDF, Sentence Transformers, LangChain, Prompt Engineering
+  \item \textbf{Data and Analytics: }Pandas, NumPy, Matplotlib, Seaborn
+  \item \textbf{Deployment and Tools: }FastAPI, Flask, Git, Docker
+  \item \textbf{Generative AI: }Ollama, Groq API, LLMs
+\resumeHeadingSkillEnd
+\vspace{-1mm}
+
+%-----------KEY COURSES-----------------
+\section{Key Courses Taken}
+\resumeHeadingSkillStart
+  \item \textbf{Machine Learning and AI: }Machine Learning, Deep Learning, Natural Language Processing
+  \item \textbf{Data Science Foundations: }Probability and Statistics, Linear Algebra
+  \item \textbf{Computer Science: }Data Structures and Algorithms, Database Management Systems
+\resumeHeadingSkillEnd
+\vspace{-1mm}
+
+%-----------POSITIONS OF RESPONSIBILITY-----------------
+\section{Positions of Responsibility}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+  \resumePOR{AI/ML Club Lead}
+    {NIT Bhopal}
+    {Aug 2023 - Present}
+  \resumePOR{Kaggle Campus Ambassador}
+    {Kaggle / NIT Bhopal}
+    {Jan 2024 - Present}
+\resumeSubHeadingListEnd
+\vspace{-4mm}
+
+%-----------ACHIEVEMENTS-----------------
+\section{Achievements}
+\vspace{-0.2mm}
+\resumeSubHeadingListStart
+  \resumePOR{Top 5 percent on Kaggle Tabular Playground Series}
+    {Ranked in top 5 percent out of 3,200 teams using gradient boosting}
+    {Mar 2025}
+  \resumePOR{Winner - Inter-NIT ML Hackathon}
+    {Built real-time fraud detection system, ranked 1st among 85 teams}
+    {Nov 2024}
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+
+\hspace*{-5mm}\rule{1.035\textwidth}{0.1mm}
+
+\end{document}

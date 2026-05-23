@@ -19,8 +19,8 @@ from jinja2 import Environment, FileSystemLoader
 # ── Paths ─────────────────────────────────────────────────────────────────────
 BASE_DIR      = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR  = os.path.join(BASE_DIR, "templates")
-TEMPLATE_FILE = "iitg_resume.tex"
-DEFAULT_JSON  = os.path.join(BASE_DIR, "JSON_schema.json")
+TEMPLATE_FILE = "resume_template.tex"
+DEFAULT_JSON  = os.path.join(BASE_DIR, "resume_data.json")
 OUTPUT_DIR    = os.path.join(BASE_DIR, "output")
 
 
@@ -42,34 +42,28 @@ def get_jinja_env():
 
 
 def escape_latex(text: str) -> str:
-    """Escape special LaTeX characters in user-provided strings."""
     if not isinstance(text, str):
         return text
-    replacements = {
-        '&':  r'\&',
-        '%':  r'\%',
-        '$':  r'\$',
-        '#':  r'\#',
-        '_':  r'\_',
-        '{':  r'\{',
-        '}':  r'\}',
-        '~':  r'\textasciitilde{}',
-        '^':  r'\textasciicircum{}',
-        '\\': r'\textbackslash{}',
-    }
-    for char, escaped in replacements.items():
+    replacements = [
+        ('&',  r'\&'),
+        ('%',  r'\%'),
+        ('$',  r'\$'),
+        ('#',  r'\#'),
+        ('_',  r'\_'),
+        ('~',  r'\textasciitilde{}'),
+        ('^',  r'\textasciicircum{}'),
+    ]
+    for char, escaped in replacements:
         text = text.replace(char, escaped)
     return text
 
-
 def escape_data(obj):
-    """Recursively escape all string values in the JSON data."""
     if isinstance(obj, str):
         return escape_latex(obj)
     elif isinstance(obj, list):
         return [escape_data(i) for i in obj]
     elif isinstance(obj, dict):
-        return {k: escape_data(v) for k, v in obj.items()}
+        return {escape_latex(k): escape_data(v) for k, v in obj.items()}  # ← escape keys too
     return obj
 
 
