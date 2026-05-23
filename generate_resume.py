@@ -1,13 +1,3 @@
-"""
-generate_resume.py
-------------------
-Renders resume JSON → .tex → PDF using Jinja2 + pdflatex.
-
-Usage:
-    python generate_resume.py
-    python generate_resume.py --json path/to/schema.json --out output/
-"""
-
 import os
 import json
 import shutil
@@ -45,6 +35,8 @@ def escape_latex(text: str) -> str:
     if not isinstance(text, str):
         return text
     replacements = [
+        ('—', '--'),          # em dash
+        ('–', '--'),          # en dash
         ('&',  r'\&'),
         ('%',  r'\%'),
         ('$',  r'\$'),

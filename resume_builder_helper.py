@@ -31,33 +31,33 @@ def skill_to_json_type_structure(skill_text):
 
 
 def experiences_to_json(experiences_text):
-    blocks = re.split(r'(?=\n-\s)', experiences_text.strip())
-    blocks = [block.strip() for block in blocks if block.strip() and block.startswith('-')]
+    blocks = re.split(r'\n(?=-\s)', experiences_text.strip())
+    blocks = [block.strip() for block in blocks if block.strip()]
     
     experiences = []
     for block in blocks:
         exp = {}
-        name_match = re.search(r'-\s*(.+?)\s*\|', block)
+        name_match  = re.search(r'-\s*(.+?)\s*\|', block)
         duration_match = re.search(r'\|\s*(.+?)\s*(?:\n|$)', block)
-        role_match = re.search(r'\n\s*(.+?),\s*.+?\s*\|', block)
-        loc_match = re.search(r',\s*(.+?)\s*\|\s*\w+', block)
-        type_match = re.search(r'\|\s*(\w+)\s*$', block, re.MULTILINE)
-        
-        points = re.findall(r'–\s*(.+?)(?=\n\s*–|\n\n|\Z)', block, re.DOTALL | re.MULTILINE)
-        
+        role_match  = re.search(r'\n\s*(.+?),\s*.+?\s*\|', block)
+        loc_match   = re.search(r',\s*(.+?)\s*\|', block)
+        type_match  = re.search(r'\|\s*(\w+)\s*$', block, re.MULTILINE)
+        flat_block  = block.replace('\n', ' ')
+        points      = re.findall(r'–\s*(.+?)(?=\s*–|$)', flat_block)
+
         if name_match:
-            exp["company"] = name_match.group(1).strip()           # Changed to "company"
-            exp["duration"] = duration_match.group(1).strip() if duration_match else ""
-            exp["role"] = role_match.group(1).strip() if role_match else ""
-            exp["location"] = loc_match.group(1).strip() if loc_match else ""
+            exp["company"]         = name_match.group(1).strip()
+            exp["duration"]        = duration_match.group(1).strip() if duration_match else ""
+            exp["role"]            = role_match.group(1).strip() if role_match else ""
+            exp["location"]        = loc_match.group(1).strip() if loc_match else ""
             exp["employment_type"] = type_match.group(1).strip() if type_match else ""
-            exp["points"] = [p.strip() for p in points if p.strip()]
+            exp["points"]          = [p.strip() for p in points if p.strip()]
             experiences.append(exp)
     return experiences
 
 
 def projects_to_json_type_structure(projects_text):
-    project_blocks = re.split(r'(?=\n-\s)', projects_text.strip())
+    project_blocks = re.split(r'\n(?=-\s)', projects_text.strip())
     project_blocks = [block.strip() for block in project_blocks if block.strip()]
     
     projects_list = []
@@ -65,14 +65,16 @@ def projects_to_json_type_structure(projects_text):
         project = {}
         name_match = re.search(r'-\s*(.+?)\s*\|', block)
         duration_match = re.search(r'\|\s*(.+?)\s*\|', block)
-        points = re.findall(r'–\s*(.+?)(?=\n–|\n\n|$)', block, re.DOTALL)
+        flat_block = block.replace('\n', ' ')
+        points = re.findall(r'–\s*(.+?)(?=\s*–|$)', flat_block)
         
         if name_match:
             project["name"] = name_match.group(1).strip()
-            project["subtitle"] = "Personal Project"          # Added as per your requirement
-            project["duration"] = duration_match.group(1).strip() if duration_match else ""
-            project["link"] = ""                               # You can fill later
-            project["points"] = [point.strip() for point in points if point.strip()]
+            project["subtitle"] = "Personal Project"
+            duration_raw = duration_match.group(1).strip() if duration_match else ""
+            project["duration"] = "" if "No Date" in duration_raw else duration_raw
+            project["link"] = ""
+            project["points"] = [p.strip() for p in points if p.strip()]
             projects_list.append(project)
     return projects_list
 
@@ -91,16 +93,17 @@ def courses_to_json(courses_text):
 
 def pors_to_json(pors_text):
     positions = []
-    lines = re.split(r'[•-]\s*', pors_text.strip())
+    lines = re.split(r'[•\-]\s*', pors_text.strip())
     lines = [line.strip() for line in lines if line.strip()]
     
     for line in lines:
-        match = re.search(r'(.+?),\s*(.+?)\s+([A-Za-z0-9].+?)$', line.strip())
+        # Match: Title, Organisation   Duration
+        match = re.search(r'(.+?),\s*(.+?)\s+((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).+?)$', line.strip())
         if match:
             positions.append({
-                "title": match.group(1).strip(),
+                "title":        match.group(1).strip(),
                 "organisation": match.group(2).strip(),
-                "duration": match.group(3).strip()
+                "duration":     match.group(3).strip()
             })
     return {"positions": positions}
 
@@ -134,8 +137,11 @@ def education_to_json(userID):
     for row in rows:
         education_list.append({
             "degree": row['degree'],
+            "field_of_study": row['field_of_study'],
             "institution": row['institution'],
-            "end_date": row['end_date']
+            "start_date": row.get('start_date', ''),
+            "end_date": row['end_date'],
+            "grade": row.get('grade', '')
         })
     return {"education": education_list}
 
@@ -144,9 +150,9 @@ def personal_info_to_json(userID):
     if user:
         return {
             "personal": {
-                "name": name,
+                "name": get_name(userID),   # also fix: was using module-level `name` variable
                 "phone": user['phone'],
-                "email": user['email'],
+                "emaila": user['email'],    # ← was "email"
                 "github": user['github'],
                 "website": user['portfolio'],
                 "linkedin": user['linkedin']
@@ -155,21 +161,18 @@ def personal_info_to_json(userID):
     else:
         return {"personal": {}}
 
-# ================== MAIN BUILDER FUNCTION ==================
+# MAIN BUILDER FUNCTION
 
-def build_resume_json(experiences_text, projects_text, skills_text, courses_text, pors_text):
+def build_resume_json(user_id, experiences_text, projects_text, skills_text, courses_text, pors_text):
     resume = {}
-    
-    # Using your functions one by one
-    resume["personal"] = personal_info_to_json(userID=2)["personal"]  # still need replace with actual input
-    resume.update(education_to_json(userID=2))       # stilll need replace with actual input
+    resume["personal"] = personal_info_to_json(userID=user_id)["personal"]
+    resume.update(education_to_json(userID=user_id))
     resume["experience"] = experiences_to_json(experiences_text)
-    resume["projects"] = projects_to_json_type_structure(projects_text)
-    resume["skills"] = skill_to_json_type_structure(skills_text)
-    resume.update(courses_to_json(courses_text))      # Adds "courses" key
-    resume.update(pors_to_json(pors_text))            # Adds "positions" key
-    resume.update(achievements_to_json(userID=2))    # stilll need replace with actual input
-    
+    resume["projects"]   = projects_to_json_type_structure(projects_text)
+    resume["skills"]     = skill_to_json_type_structure(skills_text)
+    resume.update(courses_to_json(courses_text))
+    resume.update(pors_to_json(pors_text))
+    resume.update(achievements_to_json(userID=user_id))
     return resume
 
 
@@ -204,6 +207,7 @@ if __name__ == "__main__":
 
     # Build final JSON
     final_json = build_resume_json(
+        user_id=2,
         experiences_text=experiences_text,
         projects_text=projects_text,
         skills_text=skills_text,
@@ -215,4 +219,4 @@ if __name__ == "__main__":
     with open("resume_data.json", "w", encoding="utf-8") as f:
         json.dump(final_json, f, indent=4, ensure_ascii=False)
 
-    print("✅ Resume JSON successfully created and saved as 'resume_data.json'")
+    print("Resume JSON successfully created and saved as 'resume_data.json'")

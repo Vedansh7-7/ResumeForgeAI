@@ -10,8 +10,11 @@
     "education": [
         {
             "degree": "B.Tech",
+            "field_of_study": "Computer Science and Engineering",
             "institution": "NIT Bhopal",
-            "end_date": "May 2026"
+            "start_date": "Aug 2022",
+            "end_date": "May 2026",
+            "grade": "8.9"
         }
     ],
     "experience": [
@@ -35,7 +38,9 @@
             "duration": "Jan 2026 - Present",
             "link": "",
             "points": [
-                "Built an end-to-end AI-powered resume tailoring platform...\n  – Implemented FAISS-based semantic matching...\n  – Designed a multi-user profile memory system..."
+                "Built an end-to-end AI-powered resume tailoring platform...",
+                "Implemented FAISS-based semantic matching...",
+                "Designed a multi-user profile memory system..."
             ]
         }
     ],
@@ -82,28 +87,28 @@
     "positions": [
         {
             "title": "Kaggle Campus Ambassador",
-            "organisation": "Kaggle /",
-            "duration": "NIT Bhopal Jan 2024"
+            "organisation": "Kaggle / NIT Bhopal",
+            "duration": "Jan 2024"
         },
         {
             "title": "AI/ML Club Lead",
-            "organisation": "NIT",
-            "duration": "Bhopal Aug 2023"
+            "organisation": "NIT Bhopal",
+            "duration": "Aug 2023"
         }
     ],
     "achievements": [
         {
-            "title": "Google Gen AI Study Jams, Top Finisher",
+            "title": "Google Gen AI Study Jams — Top Finisher",
             "description": "Completed all Generative AI and LLM tracks on Google Cloud Skills Boost, ranked in top 10% nationally.",
             "date": "Sep 2024"
         },
         {
-            "title": "Top 5% on Kaggle, Tabular Playground Series",
+            "title": "Top 5% on Kaggle — Tabular Playground Series",
             "description": "Ranked in top 5% out of 3,200 teams in a structured prediction competition using gradient boosting and feature engineering",
             "date": "mar 2025"
         },
         {
-            "title": "Published Research Abstract, ICML Student Workshop",
+            "title": "Published Research Abstract — ICML Student Workshop",
             "description": "Submitted a paper on RAG pipeline optimization for academic search; accepted for poster presentation",
             "date": "Feb 2025"
         }
