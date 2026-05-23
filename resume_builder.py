@@ -127,7 +127,3 @@ def clean_positions_JD():
 jd_pos, jd_general = clean_positions_JD()
 Positions_description = get_positions_section(jd_pos, clean_positions_user(user_id), general_text=jd_general)
 print(Positions_description if Positions_description else "na")
-
-# jd_pos, jd_general = clean_positions_JD()
-# jd_exp, jd_general = clean_exp_JD()
-# print(f"JD_positions: {jd_pos}\nJD_experience: {jd_exp}")
