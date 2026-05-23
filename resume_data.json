@@ -1,0 +1,111 @@
+{
+    "personal": {
+        "name": "Arjun Mehta",
+        "phone": "+91 9876543210",
+        "emaila": "arjun.mehta@gmail.com",
+        "github": "github.com/arjunmehta",
+        "website": "kaggle.com/arjunmehta",
+        "linkedin": "linkedin.com/in/arjunmehta"
+    },
+    "education": [
+        {
+            "degree": "B.Tech",
+            "institution": "NIT Bhopal",
+            "end_date": "May 2026"
+        }
+    ],
+    "experience": [
+        {
+            "company": "Arihant Capital Markets",
+            "duration": "May 2024 - Jul 2024",
+            "role": "Data Science Intern",
+            "location": "Indore, India",
+            "employment_type": "Internship",
+            "points": [
+                "Developed a retrieval-augmented generation system for academic paper summarization using Machine Learning and NLP techniques",
+                "Implemented a FAISS-based vector store and experimented with chunking and embedding strategies using Sentence Transformers",
+                "Analysed and preprocessed a dataset of 12,000 research abstracts using Python and Pandas for model training and evaluation"
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "name": "AI Resume Tailor",
+            "subtitle": "Personal Project",
+            "duration": "Jan 2026 - Present",
+            "link": "",
+            "points": [
+                "Built an end-to-end AI-powered resume tailoring platform...\n  – Implemented FAISS-based semantic matching...\n  – Designed a multi-user profile memory system..."
+            ]
+        }
+    ],
+    "skills": {
+        "Languages": [
+            "Python",
+            "SQL",
+            "C++"
+        ],
+        "AI ML": [
+            "TensorFlow",
+            "XGBoost",
+            "Scikit-learn"
+        ],
+        "NLP": [
+            "LangChain",
+            "Sentence Transformers"
+        ],
+        "Gen AI": [
+            "Ollama",
+            "Groq API",
+            "Llama 3.2"
+        ],
+        "Data & Analytics": [
+            "Pandas",
+            "NumPy",
+            "Matplotlib"
+        ]
+    },
+    "courses": {
+        "Machine Learning & AI": [
+            "Machine Learning",
+            "Deep Learning",
+            "Natural Language Processing"
+        ],
+        "Data Science Foundations": [
+            "Probability and Statistics",
+            "Linear Algebra"
+        ],
+        "Database Management": [
+            "Database Management Systems"
+        ]
+    },
+    "positions": [
+        {
+            "title": "Kaggle Campus Ambassador",
+            "organisation": "Kaggle /",
+            "duration": "NIT Bhopal Jan 2024"
+        },
+        {
+            "title": "AI/ML Club Lead",
+            "organisation": "NIT",
+            "duration": "Bhopal Aug 2023"
+        }
+    ],
+    "achievements": [
+        {
+            "title": "Google Gen AI Study Jams — Top Finisher",
+            "description": "Completed all Generative AI and LLM tracks on Google Cloud Skills Boost, ranked in top 10% nationally.",
+            "date": "Sep 2024"
+        },
+        {
+            "title": "Top 5% on Kaggle — Tabular Playground Series",
+            "description": "Ranked in top 5% out of 3,200 teams in a structured prediction competition using gradient boosting and feature engineering",
+            "date": "mar 2025"
+        },
+        {
+            "title": "Published Research Abstract — ICML Student Workshop",
+            "description": "Submitted a paper on RAG pipeline optimization for academic search; accepted for poster presentation",
+            "date": "Feb 2025"
+        }
+    ]
+}
