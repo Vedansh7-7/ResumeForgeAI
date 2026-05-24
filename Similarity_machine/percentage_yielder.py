@@ -5,6 +5,7 @@ from sentence_transformers import SentenceTransformer
 # Load model ONCE (expensive operation, don't reload inside the function)
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
+
 def get_match_score(jd_text, user_text):
     """
     Takes JD section text and User profile section text.
@@ -34,13 +35,36 @@ def get_match_score(jd_text, user_text):
     return round(float(D[0][0]) * 100, 2)
 
 
+def get_overall_match(sections: dict, weights: dict) -> dict:
+    """
+    sections: {"skills": ("jd text", "user text"), "experience": (...), ...}
+    weights:  {"skills": 0.40, "experience": 0.30, ...}
+
+    Returns a dict with section scores and overall score.
+    """
+    results = {}
+
+    for section, (jd_text, user_text) in sections.items():
+        score = get_match_score(jd_text, user_text)
+        results[section] = score
+        print(f"{section.capitalize():<12} Match: {score}%")
+
+    overall = sum(results[s] * weights[s] for s in results)
+    overall = round(overall, 2)
+
+    results["overall"] = overall
+    print(f"\nOverall Match Score: {overall}%")
+
+    return results
+
+
 # ─── Your Project Usage ───────────────────────────────────────
 
 sections = {
-    "skills":     ("Python, ML, SQL, pandas",           "Python, deep learning, numpy"),
-    "experience": ("3 years data engineering",           "2 years ML engineer"),
-    "education":  ("B.Tech Computer Science",            "B.Tech Information Technology"),
-    "projects":   ("Built recommendation system",        "Built image classifier"),
+    "skills":     ("Python, ML, SQL, pandas",        "Python, deep learning, numpy"),
+    "experience": ("3 years data engineering",        "2 years ML engineer"),
+    "education":  ("B.Tech Computer Science",         "B.Tech Information Technology"),
+    "projects":   ("Built recommendation system",     "Built image classifier"),
 }
 
 weights = {
@@ -50,11 +74,14 @@ weights = {
     "projects":   0.15,
 }
 
-results = {}
-for section, (jd_text, user_text) in sections.items():
-    score = get_match_score(jd_text, user_text)
-    results[section] = score
-    print(f"{section.capitalize():<12} Match: {score}%")
+# ─── Call the function ────────────────────────────────────────
+output = get_overall_match(sections, weights)
 
-overall = sum(results[s] * weights[s] for s in results)
-print(f"\nOverall Match Score: {round(overall, 2)}%")
+# output is a dict you can use anywhere in your project:
+# {
+#   "skills":     78.4,
+#   "experience": 65.1,
+#   "education":  90.2,
+#   "projects":   55.7,
+#   "overall":    74.3
+# }
