@@ -13,15 +13,15 @@ final_jd = {
     "achievements": []
 }
 
-with open(r"processing_files\raw_jd_sections.json", "r") as f:
+with open(r"processing_files\raw_jd_sections.json", "r", encoding="utf-8") as f:
     jd_sections = json.load(f)
 
 llm = ChatOllama(model=model, temperature=0)
 
-with open(r"prompts\section_normalizer_human.txt", "r") as f:
+with open(r"prompts\section_normalizer_human.txt", "r", encoding="utf-8") as f:
     human_template = f.read()
 
-with open(r"prompts\section_normalizer_system.txt", "r") as f:
+with open(r"prompts\section_normalizer_system.txt", "r", encoding="utf-8") as f:
     system_prompt = f.read()
 
 for section_name, section_lines in jd_sections.items():
@@ -48,7 +48,7 @@ for section_name, section_lines in jd_sections.items():
 # merge + deduplicate
 final_jd = {k: " ".join(dict.fromkeys(v)) for k, v in final_jd.items()}
 
-with open(r"processing_files\normalized_jd_sections.json", "w", encoding="utf-8") as f:
+with open(r"processing_files\normalized_jd_sections.jso, n", "w", encoding="utf-8") as f:
     json.dump(final_jd, f, indent=4, ensure_ascii=False)
 
 print("Normalised structure formed")
