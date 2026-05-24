@@ -58,7 +58,7 @@ def get_overall_match(sections: dict, weights: dict) -> dict:
     return results
 
 
-# ─── Your Project Usage ───────────────────────────────────────
+# ─── Example ───────────────────────────────────────
 
 sections = {
     "skills":     ("Python, ML, SQL, pandas",        "Python, deep learning, numpy"),
@@ -77,7 +77,7 @@ weights = {
 # ─── Call the function ────────────────────────────────────────
 output = get_overall_match(sections, weights)
 
-# output is a dict you can use anywhere in your project:
+# output is a dict, example output:
 # {
 #   "skills":     78.4,
 #   "experience": 65.1,
