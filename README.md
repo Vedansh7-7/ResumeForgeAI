@@ -1,26 +1,36 @@
 # ResumeForge AI
 
-An AI-powered resume tailoring platform that customises resumes against a Job Description using deterministic parsing, semantic retrieval, local LLMs, and automated PDF rendering — built without relying on black-box generation.
+An AI-assisted, schema-driven resume generation platform that tailors resumes against a Job Description using deterministic parsing, semantic retrieval, structured generation pipelines, and automated LaTeX rendering.
 
-> JD parsing and normalisation run locally via Ollama + Llama 3.2. Resume section generation uses Groq API.
+Instead of relying on a single black-box prompt, ResumeForge AI decomposes resume generation into explicit, inspectable stages — combining rule-based systems, retrieval pipelines, local and hosted LLMs, and deterministic document rendering.
 
----
-
-## What It Does
-
-Most resume tools either ask you to write everything yourself or hand everything to a black-box AI. ResumeForge AI does neither.
-
-It maintains a structured record of your professional profile — skills, projects, experience, education, achievements — and when you upload a JD, it understands what the role needs, retrieves the most relevant parts of your profile, and generates a tailored, ATS-optimised resume section by section.
-
-The result is a resume that is genuinely yours, reframed intelligently for each role.
+> Job Description normalization runs through Ollama + Llama 3.2, while section-wise resume generation is handled via Groq-hosted LLMs.
 
 ---
 
-## System Architecture
+# Overview
 
-The platform runs two independent tracks after JD parsing:
+Most resume builders either:
+- force users to manually rewrite resumes for every role, or
+- delegate everything to a single opaque LLM prompt.
 
-```
+ResumeForge AI takes a different approach.
+
+The system maintains a structured, persistent professional profile for each user and intelligently tailors resume sections against a given Job Description through:
+- semantic parsing
+- retrieval-aware orchestration
+- section-specific prompting
+- structured intermediate schemas
+- deterministic PDF rendering
+
+The renderer never consumes raw LLM output directly.  
+All generated content is first normalized into a structured schema before compilation.
+
+---
+
+# System Architecture
+
+```text
                         JD PDF
                           │
                           ▼
@@ -32,151 +42,317 @@ The platform runs two independent tracks after JD parsing:
               raw_jd_sections.json
                           │
                           ▼
-            LLM JD Normalizer (Llama 3.2)
-            normalized_jd_sections.json
+        LLM JD Normalizer (Llama 3.2 via Ollama)
+        normalized_jd_sections.json
                           │
               ┌───────────┴────────────┐
               │                        │
               ▼                        ▼
+
    ┌──────────────────┐    ┌─────────────────────────┐
-   │  FAISS Semantic  │    │   Resume Writing        │
-   │  Matching Engine │    │   Pipeline              │
-   │                  │    │                         │
-   │  JD + User       │    │  resume_builder.py      │
-   │  Profile         │    │  calls section scripts  │
-   │                  │    │  one by one:            │
-   │  Output:         │    │  skills.py              │
-   │  JD-Profile      │    │  experience.py          │
-   │  Match %         │    │  projects.py  ...       │
-   └──────────────────┘    │        │                │
-                           │        ▼                │
-                           │  Each script fetches:   │
-                           │  - JD section (JSON)    │
-                           │  - User section (DB)    │
-                           │  - Calls Groq LLM       │
-                           │  - Returns plain text   │
-                           │        │                │
-                           │        ▼                │
-                           │  Resume JSON Schema     │
-                           │  (filled section-wise)  │
-                           │        │                │
-                           │        ▼                │
-                           │  Jinja2 + LaTeX → .tex  │
-                           │        │                │
-                           │        ▼                │
-                           │  pdflatex → PDF         │
-                           └─────────────────────────┘
+   │ Semantic Matching │    │ Resume Generation       │
+   │ Engine (FAISS)    │    │ Pipeline                │
+   │                   │    │                         │
+   │ Sentence          │    │ resume_builder.py       │
+   │ Transformers      │    │ orchestrates section    │
+   │ + FAISS           │    │ generation scripts      │
+   │                   │    │                         │
+   │ JD ↔ Generated    │    │ skills.py               │
+   │ Resume Similarity │    │ experience.py           │
+   │ Scoring           │    │ projects.py             │
+   └──────────────────┘    │ courses.py              │
+                            │ positions.py            │
+                            │                         │
+                            │ Each script:            │
+                            │ - fetches JD section    │
+                            │ - fetches DB section    │
+                            │ - builds prompts        │
+                            │ - calls Groq LLM        │
+                            │ - returns formatted     │
+                            │   structured text       │
+                            │           │             │
+                            │           ▼             │
+                            │ Canonical Resume Schema │
+                            │ (JSON Intermediate Rep) │
+                            │           │             │
+                            │           ▼             │
+                            │ Jinja2 + LaTeX Renderer │
+                            │           │             │
+                            │           ▼             │
+                            │ pdflatex → PDF Resume   │
+                            └─────────────────────────┘
 ```
 
 ---
 
-## Pipeline in Detail
+# Pipeline in Detail
 
-### Stage 1 — JD Parsing
-- `pypdf` extracts raw text from the uploaded JD PDF
-- Output saved as `output.txt`
+## Stage 1 — JD Parsing
 
-### Stage 2 — Section Extraction
-- RegEx-based heading detection splits JD into semantic sections
-- Output saved as `raw_jd_sections.json`
+- `pypdf` extracts raw text from uploaded Job Description PDFs
+- Unicode-safe parsing pipeline
+- Output saved as:
 
-### Stage 3 — LLM Normalisation
-- Llama 3.2 (via Ollama, running locally) normalises raw sections
-- Maps JD content into resume-relevant categories
-- Output saved as `normalized_jd_sections.json`
-
-### Track A — Semantic Matching (Evaluation Only)
-- FAISS + Sentence Transformers compares JD against user profile
-- Returns a JD-to-profile match percentage
-- Used for insight and scoring — not part of resume writing
-
-### Track B — Resume Writing
-- `resume_builder.py` orchestrates section-wise generation
-- For each resume section, calls a dedicated script (`skills.py`, `experience.py`, etc.)
-- Each script fetches its relevant slice from `normalized_jd_sections.json` and the user's MySQL profile
-- Builds a system prompt + human prompt and calls Groq LLM
-- Receives plain formatted text back (e.g. categorised skill bullets)
-- `resume_builder.py` fills each response into the canonical Resume JSON Schema
-- Once all sections are filled, the JSON is passed to the rendering pipeline
-
-### Stage 4 — Rendering
-- Jinja2 templates render the JSON into a `.tex` file
-- `pdflatex` compiles the `.tex` into a final PDF resume
+```text
+processing_files/output.txt
+```
 
 ---
 
-## Features
+## Stage 2 — RegEx Section Extraction
 
-### JD Understanding
-- PDF parsing with unicode-safe text extraction
-- RegEx + semantic heading detection for section splitting
-- Local LLM normalisation into structured resume-relevant JSON
-- ATS keyword preservation throughout
+The extracted JD text is segmented into semantic sections using:
+- heading detection
+- pattern matching
+- rule-based parsing
 
-### Professional Profile System
-Maintains a persistent, structured profile per user across 8 sections:
+Examples:
+- Technical Skills
+- Experience
+- Requirements
+- Responsibilities
+
+Output:
+
+```text
+raw_jd_sections.json
+```
+
+---
+
+## Stage 3 — LLM-Based JD Normalization
+
+Raw extracted sections are normalized using:
+- Ollama
+- Llama 3.2
+
+The normalizer:
+- restructures inconsistent JD formats
+- merges semantically similar sections
+- maps content into resume-relevant categories
+- preserves ATS keywords
+
+Output:
+
+```text
+normalized_jd_sections.json
+```
+
+---
+
+# Multi-Model AI Pipeline
+
+ResumeForge AI intentionally separates:
+- understanding tasks
+- retrieval tasks
+- generation tasks
+- rendering tasks
+
+Different models are used for different responsibilities.
+
+### Local LLMs (Ollama + Llama 3.2)
+Used for:
+- semantic cleanup
+- JD normalization
+- structure alignment
+
+### Groq-hosted LLMs
+Used for:
+- high-speed section-wise resume generation
+- contextual rewriting
+- ATS-focused phrasing
+
+This separation improves:
+- controllability
+- observability
+- modularity
+- debugging
+
+---
+
+# Semantic Alignment Engine
+
+After resume generation, the system computes semantic similarity between:
+- the uploaded Job Description
+- the generated tailored resume
+
+using:
+- Sentence Transformers embeddings
+- FAISS vector similarity search
+
+The resulting score acts as:
+- a resume-to-JD relevance metric
+- a tailoring quality estimate
+- an ATS alignment approximation
+
+Future extensions include:
+- section-wise similarity scoring
+- missing-skill detection
+- retrieval-guided regeneration
+- improvement recommendations
+
+---
+
+# Schema-Driven Resume Architecture
+
+One of the core architectural decisions in ResumeForge AI is the use of a canonical intermediate resume schema.
+
+```text
+LLM Output
+    ↓
+Structured Resume JSON Schema
+    ↓
+Rendering Engine
+```
+
+This schema decouples:
+- AI generation
+- formatting
+- rendering
+- template design
+
+Benefits:
+- deterministic rendering
+- reusable templates
+- future DOCX / HTML support
+- renderer independence
+- easier debugging
+
+The final renderer never directly consumes raw LLM output.
+
+---
+
+# Resume Generation Pipeline
+
+`resume_builder.py` orchestrates section-wise generation.
+
+Each section has its own dedicated generator:
+
+```text
+sections_content_builder/
+├── skills.py
+├── experience.py
+├── projects.py
+├── courses.py
+└── positions.py
+```
+
+Each generator:
+1. Fetches the relevant JD section
+2. Fetches the relevant user profile section
+3. Constructs targeted prompts
+4. Calls Groq LLM
+5. Returns structured formatted text
+
+This section-wise design improves:
+- prompt specialization
+- controllability
+- debuggability
+- reduced hallucination risk
+
+---
+
+# Deterministic Rendering Engine
+
+The rendering layer converts structured resume schemas into production-ready PDF resumes.
+
+### Rendering Stack
+- Jinja2
+- LaTeX
+- pdflatex
+
+### Features
+- Custom Jinja2 delimiters to avoid LaTeX syntax collisions
+- Recursive LaTeX-safe escaping
+- Dynamic section rendering
+- Automated `.tex → PDF` compilation
+- Per-user output isolation
+- Compilation log preservation for debugging
+
+---
+
+# Reliability & Rendering Safety
+
+The rendering system includes multiple safeguards for stability.
+
+### Reliability Features
+- Recursive LaTeX escaping for user-generated text
+- Missing field tolerant rendering
+- Schema validation before compilation
+- User-specific output directories
+- Persistent LaTeX logs for debugging failed renders
+- Deterministic rendering pipeline
+
+---
+
+# Profile Management System
+
+ResumeForge AI includes a persistent structured profile system.
+
+Each user maintains reusable professional memory across:
+
 - Personal Information
 - Education
 - Experience
 - Projects
 - Technical Skills
-- Key Courses Taken
+- Key Courses
 - Positions of Responsibility
 - Achievements
 
-### Semantic Matching (Evaluation)
-- FAISS vector search + Sentence Transformer embeddings
-- Scores user profile relevance against a given JD
-- Helps users understand how well their profile fits a role
+---
 
-### Resume Generation
-- Section-wise LLM prompting via Groq for controllable output
-- Each section script is independent and focused
-- All output assembled into a canonical JSON schema
-- Schema is the single contract between generator and renderer
+# Streamlit Interface
 
-### Resume Rendering
-- Jinja2 templating over LaTeX resume templates
-- Automated PDF compilation via `pdflatex`
+The application uses a multi-page Streamlit interface.
 
-### User Interface
-- Streamlit multi-page app — Login → Profile → Upload
-- New user: guided section-by-section onboarding
-- Returning user: sidebar navigation with inline edit and delete
-- Full CRUD across all 8 profile sections
-- JD upload saved to per-user local folder
+### User Flow
+
+```text
+Login → Profile Setup → JD Upload → Resume Generation → PDF Download
+```
+
+### Features
+- New user onboarding
+- Returning user login
+- Full CRUD operations across all profile sections
+- Sidebar-based navigation
+- Per-user local workspace
+- JD upload management
+- Resume PDF download
 
 ---
 
-## Tech Stack
+# Tech Stack
 
 | Layer | Tools |
 |---|---|
-| AI / NLP | Llama 3.2, Ollama, LangChain, Groq API |
-| Vector Search | FAISS, Sentence Transformers |
+| AI / NLP | Ollama, Llama 3.2, Groq API, LangChain |
+| Semantic Search | FAISS, Sentence Transformers |
 | Parsing | pypdf, RegEx |
 | Rendering | Jinja2, LaTeX, pdflatex |
+| Backend | Python |
 | Database | MySQL |
 | UI | Streamlit |
-| Schema | Pydantic |
+| Validation | Pydantic |
 | Config | python-dotenv |
 
 ---
 
-## Repository Structure
+# Repository Structure
 
-```
-NEW_PROJECT/
+```text
+ResumeForgeAI/
 │
-├── app.py                         # Main Streamlit entry point
-├── main_pipeline.py               # Complete resume generation pipeline
-├── generate_resume.py             # Jinja2 + pdflatex renderer
-├── resume_builder.py              # LLM section generation
-├── resume_builder_helper.py       # Builds structured JSON schema
-├── parse.py                       # PDF text extraction
-├── section_extractor.py           # Raw JD section extraction
-├── normalize_sections.py          # JD normalization using LLM
-├── resume_data.json               # Final structured resume schema
+├── app.py
+├── main_pipeline.py
+├── generate_resume.py
+├── resume_builder.py
+├── resume_builder_helper.py
+├── parse.py
+├── section_extractor.py
+├── normalize_sections.py
+├── resume_data.json
 │
 ├── pyproject.toml
 ├── uv.lock
@@ -185,7 +361,7 @@ NEW_PROJECT/
 ├── .gitignore
 │
 ├── templates/
-│   └── resume_template.tex        # Jinja2-enabled LaTeX template
+│   └── resume_template.tex
 │
 ├── processing_files/
 │   ├── output.txt
@@ -203,62 +379,60 @@ NEW_PROJECT/
 │   ├── courses.py
 │   └── positions.py
 │
-├── db/
-│   ├── db_connect.py
-│   ├── db_queries.py
-│   └── db_setup.py
+├── user/
+│   ├── Arjun_Mehta/
+│   │   ├── uploads/
+│   │   └── outputs/
+│   │
+│   └── user2/
 │
 ├── pages/
 │   ├── 1_login.py
 │   ├── 2_profile.py
 │   └── 3_upload.py
 │
-├── user/
-│   ├── Arjun_Mehta/
-│   │   ├── uploads/              # Uploaded job descriptions
-│   │   │   ├── JD_Data_Science.pdf
-│   │   │   └── JD_DevOps.pdf
-│   │   │
-│   │   └── outputs/              # User-specific generated resumes
-│   │       ├── Arjun_Mehta_resume.tex
-│   │       ├── Arjun_Mehta_resume.pdf
-│   │       ├── Arjun_Mehta_resume.log
-│   │       └── Arjun_Mehta_resume.aux
-│   │
-│   └── user1/
-│       ├── uploads/
-│       └── outputs/
+├── db/
+│   ├── db_connect.py
+│   ├── db_queries.py
+│   └── db_setup.py
 │
-└── output/                        # Global testing output folder (optional)
-    ├── Arjun_Mehta_resume.tex
-    ├── Arjun_Mehta_resume.pdf
-    └── Arjun_Mehta_resume.log
+└── output/
 ```
 
 ---
 
-## Getting Started
+# Getting Started
 
-### 1. Clone the repository
+## 1. Clone Repository
 
 ```bash
 git clone https://github.com/Vedansh7-7/ResumeForgeAI
 cd ResumeForgeAI
 ```
 
-### 2. Create and activate virtual environment
+---
+
+## 2. Create Virtual Environment
 
 ```bash
 python -m venv venv
+```
 
-# Windows
+### Windows
+
+```bash
 venv\Scripts\activate
+```
 
-# Mac / Linux
+### Linux / Mac
+
+```bash
 source venv/bin/activate
 ```
 
-### 3. Install dependencies
+---
+
+## 3. Install Dependencies
 
 ```bash
 pip install langchain langchain-community langchain-ollama ollama
@@ -267,37 +441,46 @@ pip install streamlit mysql-connector-python python-dotenv pydantic
 pip install groq
 ```
 
-### 4. Install Ollama and pull model as well as get an Groq API key
+---
 
-Download from [ollama.com](https://ollama.com), then:
+## 4. Install Ollama + Pull Model
+
+Download Ollama:
+
+https://ollama.com
+
+Then pull the model:
 
 ```bash
 ollama pull llama3.2
 ```
 
-for groq API key visit: [Groq API](https://console.groq.com/keys)
+---
 
-### 5. Set up MySQL
+## 5. Configure Environment Variables
 
-Run the setup script once:
+Create a `.env` file:
+
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=resume_platform
+
+GROQ_API_KEY=your_groq_api_key
+```
+
+---
+
+## 6. Setup Database
 
 ```bash
 python user/db/db_setup.py
 ```
 
-### 6. Configure environment
+---
 
-Copy `.env.example` to `.env` and fill in your credentials:
-
-```
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=resume_platform
-GROQ_API_KEY=your_groq_api_key
-```
-
-### 7. Run the app
+## 7. Run Application
 
 ```bash
 streamlit run app.py
@@ -305,44 +488,140 @@ streamlit run app.py
 
 ---
 
-## Current Status
+# Current Status
 
 | Component | Status |
 |---|---|
-| JD PDF Parser | Done |
-| RegEx Section Extractor | Done |
-| LLM JD Normaliser (Llama 3.2) | Done |
-| User Profile System (DB + UI) | Done |
-| Semantic Matching (FAISS) | In Progress |
-| Section-wise Resume Generator (Groq) | Done |
-| Resume JSON Schema | Done |
-| LaTeX Renderer | Done |
-| PDF Compilation | Done |
+| JD PDF Parser | Complete |
+| RegEx Section Extraction | Complete |
+| LLM JD Normalization | Complete |
+| Structured User Profile System | Complete |
+| Multi-Page Streamlit UI | Complete |
+| Resume JSON Schema | Complete |
+| Section-wise Resume Generation | Complete |
+| Semantic Similarity Engine (FAISS) | Complete |
+| Jinja2 + LaTeX Rendering Engine | Complete |
+| Automated PDF Compilation | Complete |
 
 ---
 
-## Design Philosophy
+# Engineering Decisions & Open Discussion
 
-This project is built on the principle that resume generation should be **deterministic where possible, AI-assisted where valuable**.
+This project intentionally prioritizes:
+- modularity
+- observability
+- deterministic orchestration
+- inspectable pipelines
 
-Rather than feeding everything to a single LLM prompt, the pipeline is broken into explicit, auditable stages — each with a clear input and output. The JD parsing, section extraction, retrieval, and rendering layers are all rule-based and inspectable. LLMs are used only where natural language understanding and generation genuinely add value: normalising JD text and rewriting resume content for a specific role.
-
-This makes the system easier to debug, improve, and trust.
+over opaque end-to-end prompting.
 
 ---
 
-## Roadmap
+## Why Section-Wise Generation?
 
-- Interactive resume editor
+Instead of generating the entire resume in one prompt, the system generates:
+- skills
+- experience
+- projects
+- courses
+- PORs
+
+independently.
+
+Benefits:
+- improved controllability
+- easier debugging
+- specialized prompts
+- lower hallucination risk
+- reusable generators
+
+---
+
+## Why Schema-First Rendering?
+
+The structured intermediate schema separates:
+- AI generation
+- presentation
+- rendering
+
+This makes the renderer deterministic and template-independent.
+
+---
+
+## Why Jinja2 + LaTeX Instead of HTML?
+
+The rendering engine prioritizes:
+- ATS consistency
+- deterministic layouts
+- stable PDF generation
+- typography control
+
+while accepting the complexity of:
+- LaTeX escaping
+- template orchestration
+- compilation management
+
+---
+
+## Why Separate Normalization From Generation?
+
+JD understanding and resume writing are fundamentally different tasks.
+
+The pipeline intentionally separates:
+- semantic cleanup
+- structure normalization
+- generation
+
+to improve transparency and controllability.
+
+---
+
+## Open Questions & Future Exploration
+
+Some active architectural questions being explored:
+
+- Should retrieval happen before generation or after?
+- Would reranking improve section quality?
+- Is section-wise prompting superior to agentic generation?
+- Should semantic similarity be computed per-section instead of globally?
+- Could structured outputs replace regex normalization entirely?
+
+Contributions and discussion are welcome.
+
+---
+
+# Planned Improvements
+
 - Multiple LaTeX resume templates
-- Resume scoring against JD
+- Interactive resume editor
+- Resume scoring dashboard
 - Cover letter generation
-- Resume versioning per JD
+- Resume versioning
 - FastAPI backend
-- Web dashboard
+- Deployment pipeline
+- HTML/DOCX export support
+- Retrieval-guided regeneration
 
 ---
 
-## License
+# Media (Coming Soon)
+
+Planned additions:
+- System architecture diagrams
+- Streamlit walkthrough GIFs
+- Resume generation demos
+- Before vs after comparisons
+- Pipeline screenshots
+- Generated PDF samples
+
+---
+
+# Resume Bullet Version
+
+> Built a schema-driven AI-assisted resume generation platform using hybrid NLP pipelines, semantic retrieval (FAISS), multi-model LLM orchestration (Ollama + Groq), and deterministic LaTeX rendering via Jinja2.
+
+---
+
+# License
 
 MIT License
