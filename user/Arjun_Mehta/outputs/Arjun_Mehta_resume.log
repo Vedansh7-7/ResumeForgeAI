@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.5.24)  24 MAY 2026 19:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.5.24)  24 MAY 2026 19:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"D:/Coding2/MLAI/New Project/output/Arjun_Mehta_resume.tex"
-(D:/Coding2/MLAI/New Project/output/Arjun_Mehta_resume.tex
+**./user/Arjun_Mehta/outputs/Arjun_Mehta_resume.tex
+(user/Arjun_Mehta/outputs/Arjun_Mehta_resume.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
 (C:\Users\HP\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -374,13 +374,13 @@ Package nfssext-cfr Warning: Patching font initialisation macro for typewriter.
 .def
 File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count301
-) (D:\Coding2\MLAI\New Project\output\Arjun_Mehta_resume.aux)
+)
+No file Arjun_Mehta_resume.aux.
 \openout1 = `Arjun_Mehta_resume.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/lmm/m/it on input line 91.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 9
 1.
-
 (C:\Users\HP\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -469,13 +469,10 @@ LaTeX Font Info:    ... okay on input line 91.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 91.
-(D:\Coding2\MLAI\New Project\output\Arjun_Mehta_resume.out)
-(D:\Coding2\MLAI\New Project\output\Arjun_Mehta_resume.out)
 \@outlinefile=\write3
 \openout3 = `Arjun_Mehta_resume.out'.
 
 LaTeX Info: Redefining \swshape on input line 91.
-
 
 Package nfssext-cfr Warning: Overwriting kernel definition of \swshape  (new) o
 n input line 91.
@@ -488,6 +485,10 @@ odingSubset{} on input line 91.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 104.
 
+Overfull \hbox (4.09914pt too wide) in paragraph at lines 182--183
+[]| []  
+ []
+
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 4.08003pt, for example:
@@ -498,31 +499,29 @@ Package fancyhdr Warning: \footskip is too small (0.0pt):
 {C:/Users/HP/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/HP/AppD
 ata/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/HP/AppData
 /Local/Programs/MiKTeX/fonts/enc/dvips/cfr-lm/t1-clm.enc}]
-Overfull \hbox (4.09914pt too wide) in paragraph at lines 210--211
-[]| []  
- []
-
-
-Package fancyhdr Warning: \footskip is too small (0.0pt): 
-(fancyhdr)                Make it at least 4.08003pt, for example:
-(fancyhdr)                \setlength{\footskip}{4.08003pt}.
-
-[2] (D:\Coding2\MLAI\New Project\output\Arjun_Mehta_resume.aux)
+(D:\Coding2\MLAI\New Project\user\Arjun_Mehta\outputs\Arjun_Mehta_resume.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
-Package rerunfilecheck Info: File `Arjun_Mehta_resume.out' has not changed.
-(rerunfilecheck)             Checksum: 7EC311566F558A8353F53CB34C6E6B86;811.
+
+
+Package rerunfilecheck Warning: File `Arjun_Mehta_resume.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Arjun_Mehta_resume.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  53B474F96D3563FEC12833550E001DCE;584.
  ) 
 Here is how much of TeX's memory you used:
- 11499 strings out of 467691
- 183873 string characters out of 5416439
- 636752 words of memory out of 5000000
- 40394 multiletter control sequences out of 15000+600000
+ 11479 strings out of 467691
+ 183409 string characters out of 5416439
+ 632666 words of memory out of 5000000
+ 40384 multiletter control sequences out of 15000+600000
  659755 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,1294b,575s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,1284b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\HP\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm100
 0.pk> <C:\Users\HP\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti
 1000.pk> <C:\Users\HP\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
@@ -533,10 +532,10 @@ i600\ecrm1095.pk> <C:\Users\HP\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
 ic/lm/lmbx10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX/fonts/type1/public/
 lm/lmsy10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
 lmsy6.pfb>
-Output written on "D:\Coding2\MLAI\New Project\output\Arjun_Mehta_resume.pdf" (
-2 pages, 101294 bytes).
+Output written on "D:\Coding2\MLAI\New Project\user\Arjun_Mehta\outputs\Arjun_M
+ehta_resume.pdf" (1 page, 93543 bytes).
 PDF statistics:
- 332 PDF objects out of 1000 (max. 8388607)
- 10 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 292 PDF objects out of 1000 (max. 8388607)
+ 7 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

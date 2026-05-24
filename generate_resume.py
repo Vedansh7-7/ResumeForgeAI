@@ -70,7 +70,7 @@ def render_tex(data: dict, output_tex_path: str):
     with open(output_tex_path, "w", encoding="utf-8") as f:
         f.write(rendered)
 
-    print(f"✓ .tex file written: {output_tex_path}")
+    print(f" .tex file written: {output_tex_path}")
 
 
 # ── Compile ───────────────────────────────────────────────────────────────────

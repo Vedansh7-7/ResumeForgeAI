@@ -3,21 +3,30 @@ import sys
 import os
 from parse import parsePdf
 
-def main_pipeline(path, user_id, user_name):
+def main_pipeline(path, user_id, user_name, progress_box=None):
 
     # ── Stage 1: Parse JD PDF ──────────────────────────────────────────────
+    if progress_box:
+        progress_box.info("Stage 1/6: Parsing JD PDF...")
+
     result = parsePdf(path)
-    if result != r"Extracted into ./processing_files/output.txt":
+    if result != "Extracted into ./processing_files/output.txt":
         print("PDF parsing failed.")
         return
 
     # ── Stage 2: Extract sections ──────────────────────────────────────────
-    subprocess.run(['python', 'section_extractor.py'], check=True)
+    if progress_box:
+        progress_box.info("Stage 2/6: Extracting sections...")
+    subprocess.run(['uv', 'run', 'section_extractor.py'], check=True)
 
     # ── Stage 3: Normalise sections ────────────────────────────────────────
-    subprocess.run(['python', 'normalize_sections.py'], check=True)
+    if progress_box:
+        progress_box.info("Stage 3/6: Normalising sections...")
+    subprocess.run(['uv', 'run', 'normalize_sections.py'], check=True)
 
     # ── Stage 4: Generate section content via LLM ─────────────────────────
+    if progress_box:
+        progress_box.info("Stage 4/6: Generating section content via LLM...")
     from resume_builder import (
         clean_skills_JD, clean_skills_user,
         clean_exp_JD, clean_exp_user,
@@ -42,6 +51,8 @@ def main_pipeline(path, user_id, user_name):
     pos_text       = get_positions_section(jd_pos, clean_positions_user(user_id), general_text=jd_gen) or ""
 
     # ── Stage 5: Build JSON schema ─────────────────────────────────────────
+    if progress_box:
+        progress_box.info("Stage 5/6: Building JSON schema...")
     from resume_builder_helper import build_resume_json
     import json
 
@@ -60,7 +71,25 @@ def main_pipeline(path, user_id, user_name):
     print("JSON schema built.")
 
     # ── Stage 6: Render PDF ────────────────────────────────────────────────
+# ── Stage 6: Render PDF ────────────────────────────────────────────────
+    if progress_box:
+        progress_box.info("Stage 6/6: Rendering PDF...")
+
     from generate_resume import generate
-    pdf_path = generate()
+
+    output_dir = os.path.join(
+        "user",
+        user_name.replace(" ", "_"),
+        "outputs"
+    )
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    pdf_path = generate(
+        json_path="resume_data.json",
+        output_dir=output_dir
+    )
+
     print(f"Resume generated: {pdf_path}")
+
     return pdf_path

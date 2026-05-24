@@ -17,73 +17,51 @@
             "grade": "8.9"
         }
     ],
-    "experience": [
-        {
-            "company": "Arihant Capital Markets",
-            "duration": "May 2024 - Jul 2024",
-            "role": "Data Science Intern",
-            "location": "Indore, India",
-            "employment_type": "Internship",
-            "points": [
-                "Developed a retrieval-augmented generation system for academic paper summarization using Machine Learning and NLP techniques",
-                "Implemented a FAISS-based vector store and experimented with chunking and embedding strategies using Sentence Transformers",
-                "Analysed and preprocessed a dataset of 12,000 research abstracts using Python and Pandas for model training and evaluation"
-            ]
-        }
-    ],
+    "experience": [],
     "projects": [
         {
             "name": "AI Resume Tailor",
             "subtitle": "Personal Project",
-            "duration": "Jan 2026 - Present",
+            "duration": "",
             "link": "",
             "points": [
-                "Built an end-to-end AI-powered resume tailoring platform...",
-                "Implemented FAISS-based semantic matching...",
-                "Designed a multi-user profile memory system..."
+                "Built an end-to-end AI-powered platform that utilizes natural language processing and machine learning to generate JD-specific resume sections, demonstrating expertise in AI-driven business intelligence solutions",
+                "Implemented FAISS-based semantic matching to score profile-JD relevance, showcasing ability to develop innovative matching systems",
+                "Designed a multi-user profile memory system with Streamlit and MySQL, highlighting skills in data management and integration"
+            ]
+        },
+        {
+            "name": "Sentiment Analysis Engine",
+            "subtitle": "Personal Project",
+            "duration": "",
+            "link": "",
+            "points": [
+                "Developed an NLP-based sentiment classifier for product reviews using TF-IDF vectorization and logistic regression, demonstrating ability to apply data analysis and machine learning techniques",
+                "Built and optimized a model that achieved 89% accuracy, handling class imbalance using SMOTE and showcasing skills in process improvement and data visualization",
+                "Visualized sentiment distribution and model performance using Matplotlib and Seaborn, highlighting expertise in data visualization concepts"
             ]
         }
     ],
     "skills": {
-        "Languages": [
-            "Python",
-            "SQL",
-            "C++"
-        ],
         "AI ML": [
+            "Groq AI",
             "TensorFlow",
-            "XGBoost",
-            "Scikit-learn"
+            "XGBoost"
+        ],
+        "Data & Analytics": [
+            "Matplotlib",
+            "Numpy"
+        ],
+        "Languages": [
+            "SQL",
+            "Python"
         ],
         "NLP": [
             "LangChain",
-            "Sentence Transformers"
-        ],
-        "Gen AI": [
-            "Ollama",
-            "Groq API",
-            "Llama 3.2"
-        ],
-        "Data & Analytics": [
-            "Pandas",
-            "NumPy",
-            "Matplotlib"
+            "TF-IDF"
         ]
     },
-    "courses": {
-        "Machine Learning & AI": [
-            "Machine Learning",
-            "Deep Learning",
-            "Natural Language Processing"
-        ],
-        "Data Science Foundations": [
-            "Probability and Statistics",
-            "Linear Algebra"
-        ],
-        "Database Management": [
-            "Database Management Systems"
-        ]
-    },
+    "courses": {},
     "positions": [
         {
             "title": "Kaggle Campus Ambassador",

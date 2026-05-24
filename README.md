@@ -166,59 +166,73 @@ Maintains a persistent, structured profile per user across 8 sections:
 ## Repository Structure
 
 ```
-/ResumeForgeAI
+NEW_PROJECT/
 │
-├── app.py                          # Streamlit entry point
+├── app.py                         # Main Streamlit entry point
+├── main_pipeline.py               # Complete resume generation pipeline
+├── generate_resume.py             # Jinja2 + pdflatex renderer
+├── resume_builder.py              # LLM section generation
+├── resume_builder_helper.py       # Builds structured JSON schema
+├── parse.py                       # PDF text extraction
+├── section_extractor.py           # Raw JD section extraction
+├── normalize_sections.py          # JD normalization using LLM
+├── resume_data.json               # Final structured resume schema
 │
-├── pages/
-│   ├── 1_login.py                  # Name-based login
-│   ├── 2_profile.py                # Profile CRUD interface
-│   └── 3_upload.py                 # JD PDF upload + pipeline trigger
+├── pyproject.toml
+├── uv.lock
+├── README.md
+├── .env
+├── .gitignore
 │
-├── user/
-│   ├── db/
-│   │   ├── db_connect.py           # MySQL connection helper
-│   │   ├── db_setup.py             # One-time DB and table creation
-│   │   └── db_queries.py           # All DB read/write operations
-│   └── {username}/
-│       ├── uploads/                # Uploaded JD PDFs
-│       └── outputs/                # Generated resume PDFs
+├── templates/
+│   └── resume_template.tex        # Jinja2-enabled LaTeX template
 │
-├── parsers/
-│   └── parse.py                    # JD PDF parser → output.txt
-│
-├── extractors/
-│   └── section_extractor.py        # RegEx section extraction → raw_jd_sections.json
-│
-├── normalizers/
-│   └── normalize_sections.py       # LLM normalisation → normalized_jd_sections.json
-│
-├── LLM/                            # Section-wise Groq LLM scripts
-│   ├── skills.py
-│   ├── experience.py
-│   ├── projects.py
-│   └── ...
-│
-├── resume_builder.py               # Orchestrates section scripts → fills JSON schema
-│
-├── schema/
-│   └── resume_schema.py            # Canonical Pydantic resume JSON schema
-│
-├── renderers/                      # Jinja2 + LaTeX rendering pipeline
-│
-├── templates/                      # LaTeX resume templates
+├── processing_files/
+│   ├── output.txt
+│   ├── raw_jd_sections.json
+│   └── normalized_jd_sections.json
 │
 ├── prompts/
 │   ├── section_normalizer_system.txt
 │   └── section_normalizer_human.txt
 │
-├── processing_files/
-│   ├── output.txt                  # Raw JD text
-│   ├── raw_jd_sections.json        # Extracted JD sections
-│   └── normalized_jd_sections.json # LLM-normalised JD
+├── sections_content_builder/
+│   ├── skills.py
+│   ├── experience.py
+│   ├── projects.py
+│   ├── courses.py
+│   └── positions.py
 │
-├── .env.example
-└── README.md
+├── db/
+│   ├── db_connect.py
+│   ├── db_queries.py
+│   └── db_setup.py
+│
+├── pages/
+│   ├── 1_login.py
+│   ├── 2_profile.py
+│   └── 3_upload.py
+│
+├── user/
+│   ├── Arjun_Mehta/
+│   │   ├── uploads/              # Uploaded job descriptions
+│   │   │   ├── JD_Data_Science.pdf
+│   │   │   └── JD_DevOps.pdf
+│   │   │
+│   │   └── outputs/              # User-specific generated resumes
+│   │       ├── Arjun_Mehta_resume.tex
+│   │       ├── Arjun_Mehta_resume.pdf
+│   │       ├── Arjun_Mehta_resume.log
+│   │       └── Arjun_Mehta_resume.aux
+│   │
+│   └── user1/
+│       ├── uploads/
+│       └── outputs/
+│
+└── output/                        # Global testing output folder (optional)
+    ├── Arjun_Mehta_resume.tex
+    ├── Arjun_Mehta_resume.pdf
+    └── Arjun_Mehta_resume.log
 ```
 
 ---
