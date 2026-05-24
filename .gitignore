@@ -12,12 +12,11 @@ wheels/
 .venv
 # User outputs
 output/
-user/*/outputs/
-user/*/uploads/
-*.aux
-*.log
-*.pdf
-*.tex
+user/*/outputs/*.aux
+user/*/uploads/*.pdf
+
+user/*/outputs/*.log
+user/*/outputs/*.pdf
+user/*/outputs/*.tex
 
 processing_files/
-LLM/

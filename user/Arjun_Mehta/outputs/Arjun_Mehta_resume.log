@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.5.24)  24 MAY 2026 19:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.5.24)  24 MAY 2026 21:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -375,12 +375,13 @@ Package nfssext-cfr Warning: Patching font initialisation macro for typewriter.
 File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count301
 )
-No file Arjun_Mehta_resume.aux.
+(D:\Coding2\MLAI\New Project\user\Arjun_Mehta\outputs\Arjun_Mehta_resume.aux)
 \openout1 = `Arjun_Mehta_resume.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/lmm/m/it on input line 91.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 9
 1.
+
 (C:\Users\HP\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -469,10 +470,13 @@ LaTeX Font Info:    ... okay on input line 91.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 91.
+(D:\Coding2\MLAI\New Project\user\Arjun_Mehta\outputs\Arjun_Mehta_resume.out)
+(D:\Coding2\MLAI\New Project\user\Arjun_Mehta\outputs\Arjun_Mehta_resume.out)
 \@outlinefile=\write3
 \openout3 = `Arjun_Mehta_resume.out'.
 
 LaTeX Info: Redefining \swshape on input line 91.
+
 
 Package nfssext-cfr Warning: Overwriting kernel definition of \swshape  (new) o
 n input line 91.
@@ -504,21 +508,14 @@ ata/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/HP/AppData
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
-
-
-Package rerunfilecheck Warning: File `Arjun_Mehta_resume.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Arjun_Mehta_resume.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  53B474F96D3563FEC12833550E001DCE;584.
+Package rerunfilecheck Info: File `Arjun_Mehta_resume.out' has not changed.
+(rerunfilecheck)             Checksum: 53B474F96D3563FEC12833550E001DCE;584.
  ) 
 Here is how much of TeX's memory you used:
- 11479 strings out of 467691
- 183409 string characters out of 5416439
- 632666 words of memory out of 5000000
- 40384 multiletter control sequences out of 15000+600000
+ 11493 strings out of 467691
+ 183986 string characters out of 5416439
+ 632752 words of memory out of 5000000
+ 40392 multiletter control sequences out of 15000+600000
  659755 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,11n,79p,1284b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -533,9 +530,9 @@ ic/lm/lmbx10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX/fonts/type1/public/
 lm/lmsy10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
 lmsy6.pfb>
 Output written on "D:\Coding2\MLAI\New Project\user\Arjun_Mehta\outputs\Arjun_M
-ehta_resume.pdf" (1 page, 93543 bytes).
+ehta_resume.pdf" (1 page, 93947 bytes).
 PDF statistics:
- 292 PDF objects out of 1000 (max. 8388607)
+ 305 PDF objects out of 1000 (max. 8388607)
  7 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
