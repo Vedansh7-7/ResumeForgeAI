@@ -3,7 +3,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 import json
 
 model = "llama3.2"
-print("Connecting to local processor via LangChain and normalizing raw JD json...")
+print("Connecting to local processor via LangChain and normalizing raw JD json\n")
 
 final_jd = {
     "technical_skills": [],

@@ -4,6 +4,7 @@ Upload a JD PDF → save to user's folder → ready for pipeline.
 
 import streamlit as st
 import os, sys
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 st.set_page_config(page_title="Upload JD", layout="centered")
@@ -33,9 +34,24 @@ if uploaded_file:
 
     st.write("---")
     if st.button("Build My Resume →", use_container_width=True):
-        # TODO: call pipeline here
-        # from resume_platform.pipeline import run_pipeline
-        st.info("Pipeline will run here. Coming next.")
+        with st.spinner("Building your resume..."):
+            try:
+                from main_pipeline import main_pipeline
+                pdf_path = main_pipeline(
+                    path=st.session_state["jd_path"],
+                    user_id=st.session_state["user_id"],
+                    user_name=st.session_state["user_name"],
+                )
+                st.success("Resume generated!")
+                with open(pdf_path, "rb") as f:
+                    st.download_button(
+                        label="Download Resume PDF",
+                        data=f,
+                        file_name="resume.pdf",
+                        mime="application/pdf",
+                    )
+            except Exception as e:
+                st.error(f"Pipeline failed: {e}")
 
 st.write(" ")
 if st.button("← Back to Profile", use_container_width=False):
