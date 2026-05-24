@@ -2,7 +2,6 @@ from pypdf import PdfReader
 
 
 def parsePdf(file):
-    file = f"./pdf/{file}.pdf"
     reader = PdfReader(file)
     number_of_pages = len(reader.pages)
     if number_of_pages < 1:

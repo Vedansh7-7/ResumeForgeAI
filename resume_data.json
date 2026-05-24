@@ -1,0 +1,94 @@
+{
+    "personal": {
+        "name": "Arjun Mehta",
+        "phone": "+91 9876543210",
+        "emaila": "arjun.mehta@gmail.com",
+        "github": "github.com/arjunmehta",
+        "website": "kaggle.com/arjunmehta",
+        "linkedin": "linkedin.com/in/arjunmehta"
+    },
+    "education": [
+        {
+            "degree": "B.Tech",
+            "field_of_study": "Computer Science and Engineering",
+            "institution": "NIT Bhopal",
+            "start_date": "Aug 2022",
+            "end_date": "May 2026",
+            "grade": "8.9"
+        }
+    ],
+    "experience": [],
+    "projects": [
+        {
+            "name": "AI Resume Tailor",
+            "subtitle": "Personal Project",
+            "duration": "",
+            "link": "",
+            "points": [
+                "Built an end-to-end AI-powered platform that utilizes natural language processing and machine learning to generate JD-specific resume sections",
+                "Implemented FAISS-based semantic matching to score profile-JD relevance, demonstrating expertise in AI-driven business intelligence solutions",
+                "Developed a multi-user profile memory system using Streamlit and MySQL, showcasing skills in data management and automation"
+            ]
+        },
+        {
+            "name": "Sentiment Analysis Engine",
+            "subtitle": "Personal Project",
+            "duration": "",
+            "link": "",
+            "points": [
+                "Built an NLP-based sentiment classifier for product reviews using TF-IDF vectorization and logistic regression, highlighting data analysis and visualization capabilities",
+                "Preprocessed 50,000 Amazon review records and handled class imbalance using SMOTE, demonstrating proficiency in data preprocessing and process improvement",
+                "Visualized sentiment distribution and model performance using Matplotlib and Seaborn, showcasing skills in data visualization and reporting"
+            ]
+        }
+    ],
+    "skills": {
+        "AI ML": [
+            "Groq AI",
+            "TensorFlow",
+            "XGBoost"
+        ],
+        "Data & Analytics": [
+            "Matplotlib",
+            "Numpy"
+        ],
+        "Languages": [
+            "SQL",
+            "Python"
+        ],
+        "NLP": [
+            "LangChain",
+            "TF-IDF"
+        ]
+    },
+    "courses": {},
+    "positions": [
+        {
+            "title": "Kaggle Campus Ambassador",
+            "organisation": "Kaggle / NIT Bhopal",
+            "duration": "Jan 2024"
+        },
+        {
+            "title": "AI/ML Club Lead",
+            "organisation": "NIT Bhopal",
+            "duration": "Aug 2023"
+        }
+    ],
+    "achievements": [
+        {
+            "title": "Google Gen AI Study Jams — Top Finisher",
+            "description": "Completed all Generative AI and LLM tracks on Google Cloud Skills Boost, ranked in top 10% nationally.",
+            "date": "Sep 2024"
+        },
+        {
+            "title": "Top 5% on Kaggle — Tabular Playground Series",
+            "description": "Ranked in top 5% out of 3,200 teams in a structured prediction competition using gradient boosting and feature engineering",
+            "date": "mar 2025"
+        },
+        {
+            "title": "Published Research Abstract — ICML Student Workshop",
+            "description": "Submitted a paper on RAG pipeline optimization for academic search; accepted for poster presentation",
+            "date": "Feb 2025"
+        }
+    ]
+}

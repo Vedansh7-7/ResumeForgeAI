@@ -1,0 +1,207 @@
+%-------------------------
+% Resume Template — locked to JSON schema v1
+% Jinja2 dynamic rendering
+%-------------------------
+
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
+
+\urlstyle{same}
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+%---- Custom Commands ----
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\small #3} \\
+        \textit{\small #2} & \small #4 \\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\small #3} \\
+        \textit{\small #2} & \small #4 \\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1},\hspace{0.3mm}#2 & \textit{\small #3}
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+% Achievement command: title bold, description inline, date right
+\newcommand{\resumeAchievement}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{p{0.78\textwidth}@{\extracolsep{\fill}}r}
+        \textbf{#1} -- {\small #2} & \textit{\small #3}
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=1.5mm]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+
+\newcommand{\resumeItemListStart}{
+    \begin{justify}
+    \begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep, labelsep=1.2mm, itemsep=0mm]
+    \small
+}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+\begin{document}
+\fontfamily{cmr}\selectfont
+
+%----------HEADING-----------------
+\begin{tabularx}{\linewidth}{L R}
+  \textbf{\LARGE ((( personal.name )))} & ((( personal.phone ))) \\
+  \href{mailto:((( personal.emaila )))}{((( personal.emaila )))} & \href{https://((( personal.github )))}{((( personal.github )))} \\
+  ((* if personal.website *))\href{https://((( personal.website )))}{((( personal.website )))}((* else *))\phantom{x}((* endif *)) & \href{https://((( personal.linkedin )))}{((( personal.linkedin )))} \\
+\end{tabularx}
+\vspace{-2mm}
+
+%-----------EDUCATION-----------------
+((* if education *))
+\section{Education}
+\begin{itemize}[leftmargin=*,labelsep=1.5mm,itemsep=1mm]
+  ((* for edu in education *))
+  \item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{((( edu.degree )))((* if edu.field_of_study *)), ((( edu.field_of_study )))((* endif *))} $|$ ((( edu.institution )))((* if edu.grade *)) $|$ CGPA: \textbf{((( edu.grade )))}((* endif *)) &
+      \textit{\small ((* if edu.start_date *))((( edu.start_date ))) -- ((* endif *))((( edu.end_date )))}
+    \end{tabular*}
+  ((* endfor *))
+\end{itemize}
+\vspace{-3mm}
+((* endif *))
+
+%-----------EXPERIENCE-----------------
+((* if experience *))
+\section{Experience}
+\resumeSubHeadingListStart
+  ((* for exp in experience *))
+  \resumeSubheading
+    {((( exp.company )))}{((( exp.role )))}
+    {((( exp.duration )))}{((( exp.location | default('') )))((* if exp.employment_type *)) $|$ \textit{((( exp.employment_type )))}((* endif *))}
+    \resumeItemListStart
+      ((* for point in exp.points *))
+      \item {((( point )))}
+      ((* endfor *))
+    \resumeItemListEnd
+  ((* endfor *))
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+((* endif *))
+
+%-----------PROJECTS-----------------
+((* if projects *))
+\section{Projects}
+\resumeSubHeadingListStart
+  ((* for proj in projects *))
+  \resumeProject
+    {((( proj.name )))}
+    {((( proj.subtitle | default('Personal Project') )))}
+    {((( proj.duration | default('') )))}
+    {((* if proj.link and proj.link != '' *))\href{https://((( proj.link )))}{Github}((* else *)){}((* endif *))}
+    \resumeItemListStart
+      ((* for point in proj.points *))
+      \item {((( point )))}
+      ((* endfor *))
+    \resumeItemListEnd
+  ((* endfor *))
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+((* endif *))
+
+%-----------TECHNICAL SKILLS-----------------
+((* if skills *))
+\section{Technical Skills}
+\resumeHeadingSkillStart
+  ((* for category, skill_list in skills.items() *))
+  \item \textbf{((( category ))): }((( skill_list | join(', ') )))
+  ((* endfor *))
+\resumeHeadingSkillEnd
+\vspace{-1mm}
+((* endif *))
+
+%-----------KEY COURSES-----------------
+((* if courses *))
+\section{Key Courses Taken}
+\resumeHeadingSkillStart
+  ((* for category, course_list in courses.items() *))
+  \item \textbf{((( category ))): }((( course_list | join(', ') )))
+  ((* endfor *))
+\resumeHeadingSkillEnd
+\vspace{-1mm}
+((* endif *))
+
+%-----------POSITIONS OF RESPONSIBILITY-----------------
+((* if positions *))
+\section{Positions of Responsibility}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+  ((* for pos in positions *))
+  \resumePOR{((( pos.title )))}
+    {((( pos.organisation )))}
+    {((( pos.duration )))}
+  ((* endfor *))
+\resumeSubHeadingListEnd
+\vspace{-4mm}
+((* endif *))
+
+%-----------ACHIEVEMENTS-----------------
+((* if achievements *))
+\section{Achievements}
+\vspace{-0.2mm}
+\resumeSubHeadingListStart
+  ((* for ach in achievements *))
+  \resumeAchievement{((( ach.title )))}
+    {((( ach.description | default('') )))}
+    {((( ach.date | default('') )))}
+  ((* endfor *))
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+((* endif *))
+
+\hspace*{-5mm}\rule{1.035\textwidth}{0.1mm}
+
+\end{document}

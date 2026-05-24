@@ -1,36 +1,24 @@
 {
     "general": [
         "________ Page 1 _________",
-        "Job Description - Company name",
-        "Job title: Insert job title",
-        "Location: Where is job located? Any travel etc?",
-        "Terms: Perm/contract? Hours? Full/part time?",
-        "Salary/rate: Include remuneration if possible",
-        "Requirements: Any special requirements such as weekend work",
-        "About us: Brief description of your organisation, such as what markets they",
-        "operate in, products and services offered, mission statement, culture",
-        "and values etc.",
-        "About the role:",
-        "High level summary of the role including an overview of the job’s main",
-        "purpose, who the job holder will report to and how the job contributes",
-        "to the organisation’s success. In larger firms, some information about",
-        "the department the role sits within would be helpful.",
-        "Responsibilities: - Bullet pointed list of the job holder’s main responsibilities",
-        "- Focus more on broad responsibilities than specific tasks",
-        "- Who will they liaise with? What will they manage?",
-        "- What work or results will they be accountable for?",
-        "- Aim for 6 – 10 concise bullet points in this section",
-        "Candidate"
+        "Data Scientist Job Description Template",
+        "Here’s an example of a data scientist job description template that you can adapt for yourteam’s hiring needs. Feel free to add or remove the amount of responsibilities, experience,and qualifications needed based on the seniority of the role. Enjoy!",
+        "— The DataCamp Team",
+        "Data Scientist",
+        "Description",
+        "As a data scientist at[add company name], you will drive real-world impact by applyinginnovative data-driven technology to our ever-growing dataset.You will be responsible for the end-to-end data science project lifecycle, starting fromproblem scoping to machine learning systems deployment and maintenance. [Add athorough description of the different types of projects and data sources, and outline thespecific deliverables a candidate is expected to deliver.]The ideal candidate possesses a strong analytical ability to solve complex problems withdata."
     ],
-    "requirements": [
-        "- Bullet pointed list of skills, experience and qualifications",
-        "successful candidates will need",
-        "- Be specific as possible, using numbers where possible (e.g.",
-        "experience managing teams of 10 or more)",
-        "- Don’t ask for anything that discriminates against personal",
-        "traits such as age or sex",
-        "Contact us to apply",
-        "Write a call-to-action to encourage readers to apply for the job, telling them who to contact and",
-        "how – including the email address of the recruiter or hiring manager"
+    "responsibilities": [
+        "● Work with large datasets on data extraction, cleaning, exploration, analysis, andpresentation.● Formulate data science solutions to business problems by collaborating with businessand product teams.● Design and implement algorithms to solve a wide array of challenging problems withanalytics and statistical approaches built on high-volume, high-dimensionaldatasets.● Deploy, test, validate, and maintain machine learning models in production bycollaborating with data engineers and machine learning engineers.● Perform extract, transform, load operations from data sources for modeling purposes.● Design, perform and analyze A/B tests.● [Remove or add problems relevant to this specific job title]Scope and work onproblems such as:○ Provide the most relevant recommendations during check-out.",
+        "[Insert website here] [Insert logo here]",
+        "________ Page 2 _________",
+        "○ Detect fraudulent users with sparse, high-dimensional data.○ Generate credit scores for customers.○ Predict the arrival time of a parcel based on traffic conditions.○ Use natural language processing for sentiment analysis, messageauto-completion, or search query correction.● [If necessary, add additional job requirements]",
+        "Experience",
+        "● Bachelor's degree or higher, or equivalent practical experience.● [If necessary, add X+ years of relevant analytics experience]",
+        "Minimum Qualifications",
+        "● Solid knowledge of statistical methods and machine learning fundamentals.● Strong proficiency in Python, R.● Strong proficiency in SQL.● Hands-on experience with data analytics and classical machine learning tools(e.g.pandas, NumPy, scikit-learn)and deep learning frameworks(e.g. Tensorflow, Pytorch).● [Make sure to mention any other technologies relevant to your project.]● Excellent written and verbal communication skills.● Excellent stakeholder management skills.● Ability to tell stories with data, and deliver data-driven insights to a wide range ofaudiences.",
+        "What will make you stand out",
+        "● Experience in production software engineering routines(e.g. Git versioning,Continuous Integration/Continuous Deployment).● Familiarity or experience with working on large data sets and distributed computing(e.g. Hive, Hadoop, Spark, Presto, MapReduce).● Working knowledge of Cloud-based solutions(e.g. AWS, Azure, GCP).● [If necessary, add additional preferred qualification]",
+        "[Insert website here] [Insert logo here]"
     ]
 }
