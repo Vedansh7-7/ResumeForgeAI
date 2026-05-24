@@ -2,7 +2,7 @@
 
 An AI-assisted, schema-driven resume generation platform that tailors resumes against a Job Description using deterministic parsing, semantic retrieval, structured generation pipelines, and automated LaTeX rendering.
 
-Instead of relying on a single black-box prompt, ResumeForge AI decomposes resume generation into explicit, inspectable stages — combining rule-based systems, retrieval pipelines, local and hosted LLMs, and deterministic document rendering.
+Instead of relying on a single black-box prompt, ResumeForge AI decomposes resume generation into explicit, inspectable stages, combining rule-based systems, retrieval pipelines, local and hosted LLMs, and deterministic document rendering.
 
 > Job Description normalization runs through Ollama + Llama 3.2, while section-wise resume generation is handled via Groq-hosted LLMs.
 
