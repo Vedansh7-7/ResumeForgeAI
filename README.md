@@ -8,6 +8,12 @@ Instead of relying on a single black-box prompt, ResumeForge AI decomposes resum
 
 ---
 
+## Demo
+
+![Demo](assets/demo.gif)
+
+---
+
 # Overview
 
 Most resume builders either:
@@ -15,6 +21,10 @@ Most resume builders either:
 - delegate everything to a single opaque LLM prompt.
 
 ResumeForge AI takes a different approach.
+
+## High-Level Pipeline
+
+![Pipeline](assets/pipeline.png)
 
 The system maintains a structured, persistent professional profile for each user and intelligently tailors resume sections against a given Job Description through:
 - semantic parsing
@@ -30,58 +40,7 @@ All generated content is first normalized into a structured schema before compil
 
 # System Architecture
 
-```text
-                        JD PDF
-                          │
-                          ▼
-                    PDF Parser (pypdf)
-                    generates output.txt
-                          │
-                          ▼
-              RegEx Section Extractor
-              raw_jd_sections.json
-                          │
-                          ▼
-        LLM JD Normalizer (Llama 3.2 via Ollama)
-        normalized_jd_sections.json
-                          │
-              ┌───────────┴────────────┐
-              │                        │
-              ▼                        ▼
-
-   ┌──────────────────┐    ┌─────────────────────────┐
-   │ Semantic Matching │    │ Resume Generation       │
-   │ Engine (FAISS)    │    │ Pipeline                │
-   │                   │    │                         │
-   │ Sentence          │    │ resume_builder.py       │
-   │ Transformers      │    │ orchestrates section    │
-   │ + FAISS           │    │ generation scripts      │
-   │                   │    │                         │
-   │ JD ↔ Generated    │    │ skills.py               │
-   │ Resume Similarity │    │ experience.py           │
-   │ Scoring           │    │ projects.py             │
-   └──────────────────┘    │ courses.py              │
-                            │ positions.py            │
-                            │                         │
-                            │ Each script:            │
-                            │ - fetches JD section    │
-                            │ - fetches DB section    │
-                            │ - builds prompts        │
-                            │ - calls Groq LLM        │
-                            │ - returns formatted     │
-                            │   structured text       │
-                            │           │             │
-                            │           ▼             │
-                            │ Canonical Resume Schema │
-                            │ (JSON Intermediate Rep) │
-                            │           │             │
-                            │           ▼             │
-                            │ Jinja2 + LaTeX Renderer │
-                            │           │             │
-                            │           ▼             │
-                            │ pdflatex → PDF Resume   │
-                            └─────────────────────────┘
-```
+![Pipeline](assets/architecture.png)
 
 ---
 
@@ -191,7 +150,12 @@ Future extensions include:
 - retrieval-guided regeneration
 - improvement recommendations
 
+## Semantic Alignment Flow
+
+![Semantic Matching](assets/jd-user-flow.png)
+
 ---
+
 
 # Schema-Driven Resume Architecture
 
@@ -311,6 +275,15 @@ The application uses a multi-page Streamlit interface.
 ```text
 Login → Profile Setup → JD Upload → Resume Generation → PDF Download
 ```
+
+## User Interface
+
+### Login Page
+![Login](assets/login.png)
+
+### Profile Dashboard
+![Profile](assets/profile.png)
+
 
 ### Features
 - New user onboarding
@@ -502,6 +475,10 @@ streamlit run app.py
 | Semantic Similarity Engine (FAISS) | Complete |
 | Jinja2 + LaTeX Rendering Engine | Complete |
 | Automated PDF Compilation | Complete |
+
+## Generated Resume
+
+![Generated Resume](assets/generated-resume.png)
 
 ---
 
