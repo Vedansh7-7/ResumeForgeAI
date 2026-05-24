@@ -616,12 +616,6 @@ Planned additions:
 
 ---
 
-# Resume Bullet Version
-
-> Built a schema-driven AI-assisted resume generation platform using hybrid NLP pipelines, semantic retrieval (FAISS), multi-model LLM orchestration (Ollama + Groq), and deterministic LaTeX rendering via Jinja2.
-
----
-
 # License
 
 MIT License
