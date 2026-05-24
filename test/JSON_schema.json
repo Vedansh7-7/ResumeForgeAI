@@ -1,0 +1,74 @@
+{
+  "personal": {
+    "name": "Arjun Mehta",
+    "phone": "+91 9876543210",
+    "email": "arjun.mehta@gmail.com",
+    "github": "github.com/arjunmehta",
+    "website": "kaggle.com/arjunmehta",
+    "linkedin": "linkedin.com/in/arjunmehta"
+  },
+
+  "education": [
+    {
+      "degree": "B.Tech",
+      "institution": "NIT Bhopal",
+      "year": "2022 - 2026"
+    }
+  ],
+
+  "experience": [
+    {
+      "company": "Arihant Capital Markets",
+      "duration": "May 2024 - Jul 2024",
+      "role": "Data Science Intern",
+      "location": "Indore, India",
+      "points": [
+        "Developed a retrieval-augmented generation system",
+        "Implemented a FAISS-based vector store",
+        "Analysed 12,000 research abstracts"
+      ]
+    }
+  ],
+
+  "projects": [
+    {
+      "name": "AI Resume Tailor",
+      "subtitle": "Personal Project",
+      "duration": "Jan 2026 - Present",
+      "link": "",
+      "points": [
+        "Built an AI-powered resume tailoring platform",
+        "Implemented FAISS-based semantic matching",
+        "Designed a multi-user profile memory system"
+      ]
+    }
+  ],
+
+  "skills": {
+    "Languages": ["Python", "SQL"],
+    "AI ML": ["TensorFlow", "XGBoost"]
+  },
+
+  "courses": {
+    "Machine Learning & AI": [
+      "Machine Learning",
+      "Deep Learning"
+    ]
+  },
+
+  "positions": [
+    {
+      "title": "Kaggle Campus Ambassador",
+      "organisation": "Kaggle / NIT Bhopal",
+      "duration": "Jan 2024 - Present"
+    }
+  ],
+
+  "achievements": [
+    {
+      "title": "Google Gen AI Study Jams — Top Finisher",
+      "description": "Ranked in top 10%",
+      "date": "Sep 2024"
+    }
+  ]
+}

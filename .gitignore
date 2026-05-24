@@ -1,6 +1,7 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
+*.pyc
 build/
 dist/
 wheels/
@@ -9,5 +10,14 @@ wheels/
 # Virtual environments
 .env
 .venv
+# User outputs
+output/
+user/*/outputs/
+user/*/uploads/
+*.aux
+*.log
+*.pdf
+*.tex
 
-test/
+processing_files/
+LLM/
