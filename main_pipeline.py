@@ -143,4 +143,4 @@ def main_pipeline(path, user_id, user_name, progress_box=None):
 
     print(f"Resume generated: {pdf_path}")
 
-    return pdf_path, match_scores
+    return pdf_path, match_scores, jd_data, final_json

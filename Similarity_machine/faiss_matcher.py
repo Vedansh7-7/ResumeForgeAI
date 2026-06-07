@@ -57,6 +57,30 @@ def get_overall_match(sections: dict, weights: dict) -> dict:
 
     return results
 
+def get_skill_gap(jd_skills_text: str, user_skills_dict: dict) -> list:
+    """
+    Returns list of JD keywords the user doesn't have.
+    """
+    # Flatten user skills into a single lowercase set
+    user_skills = set(
+        skill.lower()
+        for skills in user_skills_dict.values()
+        for skill in skills
+    )
+
+    # Split JD skills text into individual keywords
+    jd_keywords = [kw.strip().lower() for kw in jd_skills_text.split()]
+
+    # Find keywords not covered by user skills
+    missing = []
+    for kw in jd_keywords:
+        if len(kw) < 3:          # skip noise like "a", "or", "in"
+            continue
+        if not any(kw in skill or skill in kw for skill in user_skills):
+            if kw not in missing:
+                missing.append(kw)
+
+    return missing
 
 # ─── Example ───────────────────────────────────────
 

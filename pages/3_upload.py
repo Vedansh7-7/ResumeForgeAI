@@ -41,7 +41,7 @@ if uploaded_file:
 
             from main_pipeline import main_pipeline
 
-            pdf_path, match_scores = main_pipeline(
+            pdf_path, match_scores, jd_data, final_json = main_pipeline(
                 path=save_path,
                 user_id=st.session_state["user_id"],
                 user_name=st.session_state["user_name"],
@@ -60,6 +60,21 @@ if uploaded_file:
             col3.metric("Projects",   f"{scores.get('projects', 0)}%")
             col4.metric("Courses",    f"{scores.get('courses', 0)}%")
             st.metric("Overall Match", f"{scores.get('overall', 0)}%")
+
+            from Similarity_machine.faiss_matcher import get_skill_gap
+
+            missing_skills = get_skill_gap(
+                jd_data.get("technical_skills", ""),
+                final_json.get("skills", {})
+            )
+
+            if missing_skills:
+                st.write("---")
+                st.subheader("Skills to Develop")
+                st.write("Based on this JD, consider adding these to your profile:")
+                cols = st.columns(3)
+                for i, skill in enumerate(missing_skills[:15]):   # show top 15
+                    cols[i % 3].markdown(f"- `{skill}`")
 
             with open(pdf_path, "rb") as f:
                 st.download_button(
