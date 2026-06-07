@@ -1,13 +1,29 @@
-Normalize the following job description content into this schema:
+Normalize the following job description into STRICT JSON for an ATS resume-tailoring pipeline.
+
+OUTPUT RULES:
+
+* Return ONLY valid parsable JSON.
+* Do NOT write explanations.
+* Do NOT use markdown.
+* Do NOT wrap output in ```json.
+* Do NOT include text before or after JSON.
+* Ensure ALL keys always exist.
+* ALL fields must contain STRINGS ONLY.
+* technical_skills must be ONE dense ATS-style keyword string.
+* Do NOT return arrays or list of strings in technical_skills
+* Preserve important ATS keywords and technologies.
+* Keep concise but information-dense wording.
+
+REQUIRED SCHEMA:
 
 {
-  "technical_skills": [],
-  "experience": "",
-  "general": "",
-  "positions_of_responsibility": "",
-  "achievements": ""
+"technical_skills": "",
+"experience": "",
+"general": "",
+"positions_of_responsibility": "",
+"achievements": ""
 }
 
-JOB DESCRIPTION:
-----------------
+## JOB DESCRIPTION:
+
 {jd_text}

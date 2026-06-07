@@ -1,127 +1,178 @@
-# from langchain_ollama import ChatOllama
-# from langchain_core.messages import SystemMessage, HumanMessage # Local LLM
-# import json
-
-# model = "llama3.2"
-# print("Connecting to local processor via LangChain and normalizing raw JD json\n")
-
-# final_jd = {
-#     "technical_skills": [],
-#     "experience": [],
-#     "general": [],
-#     "positions_of_responsibility": [],
-#     "achievements": []
-# }
-
-# with open(r"processing_files\raw_jd_sections.json", "r", encoding="utf-8") as f:
-#     jd_sections = json.load(f)
-
-# llm = ChatOllama(model=model, temperature=0)
-
-# with open(r"prompts\section_normalizer_human.txt", "r", encoding="utf-8") as f:
-#     human_template = f.read()
-
-# with open(r"prompts\section_normalizer_system.txt", "r", encoding="utf-8") as f:
-#     system_prompt = f.read()
-
-# for section_name, section_lines in jd_sections.items():
-#     jd_text = "\n".join(section_lines)
-
-#     human_prompt = human_template.replace("{jd_text}", jd_text)
-
-#     messages = [
-#         SystemMessage(content=system_prompt),
-#         HumanMessage(content=human_prompt)
-#     ]
-
-#     response = llm.invoke(messages)
-#     parsed = json.loads(response.content)
-
-#     for key, value in parsed.items():
-#         if key in final_jd and value:
-#             if isinstance(value, list):
-#                 final_jd[key].extend(value)   # flatten list
-#             else:
-#                 final_jd[key].append(value)
-
-
-# # merge + deduplicate
-# final_jd = {k: " ".join(dict.fromkeys(v)) for k, v in final_jd.items()}
-
-# with open(r"processing_files\normalized_jd_sections.jso, n", "w", encoding="utf-8") as f:
-#     json.dump(final_jd, f, indent=4, ensure_ascii=False)
-
-# print("Normalised structure formed")
-
-
-
-# from langchain_ollama import ChatOllama
-# from langchain_core.messages import SystemMessage, HumanMessage # Local LLM
-
 import os
+import json
 from dotenv import load_dotenv
 from groq import Groq
-import json
+
+# =========================
+# CONFIG
+# =========================
 
 load_dotenv()
 
-model = "llama3-70b-8192"
+MODEL = "llama-3.3-70b-versatile"
 
-print("Connecting to Groq API and normalizing raw JD json\n")
+print("Connecting to Groq API and normalizing raw JD json...\n")
+
+# =========================
+# FINAL STRUCTURE
+# =========================
 
 final_jd = {
     "technical_skills": [],
     "experience": [],
     "general": [],
-    "positions_of_resibility": [],
+    "positions_of_responsibility": [],
     "achievements": []
 }
 
-with open(r"processing_files\raw_jd_sections.json", "r", encoding="utf-8") as f:
+# =========================
+# LOAD INPUT FILES
+# =========================
+
+with open(
+    r"processing_files\raw_jd_sections.json",
+    "r",
+    encoding="utf-8"
+) as f:
     jd_sections = json.load(f)
 
-# Initialize Groq client
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-with open(r"prompts\section_normalizer_human.txt", "r", encoding="utf-8") as f:
-    human_template = f.read()
-
-with open(r"prompts\section_normalizer_system.txt", "r", encoding="utf-8") as f:
+with open(
+    r"prompts\section_normalizer_system.txt",
+    "r",
+    encoding="utf-8"
+) as f:
     system_prompt = f.read()
 
+with open(
+    r"prompts\section_normalizer_human.txt",
+    "r",
+    encoding="utf-8"
+) as f:
+    human_template = f.read()
+
+# =========================
+# INITIALIZE GROQ CLIENT
+# =========================
+
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
+)
+
+# =========================
+# PROCESS EACH SECTION
+# =========================
+
 for section_name, section_lines in jd_sections.items():
+
+    print(f"Processing section: {section_name}")
+
     jd_text = "\n".join(section_lines)
 
-    human_prompt = human_template.replace("{jd_text}", jd_text)
-
-    response = client.chat.completions.create(
-        model=model,
-        temperature=0,
-        messages=[
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            {
-                "role": "user",
-                "content": human_prompt
-            }
-        ]
+    human_prompt = human_template.replace(
+        "{jd_text}",
+        jd_text
     )
 
-    parsed = json.loads(response.choices[0].message.content)
+    try:
+
+        response = client.chat.completions.create(
+            model=MODEL,
+            temperature=0,
+            response_format={"type": "json_object"},
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": human_prompt
+                }
+            ]
+        )
+
+        content = response.choices[0].message.content.strip()
+
+        if not content:
+            print(f"Empty response for section: {section_name}")
+            continue
+
+        parsed = json.loads(content)
+
+    except Exception as e:
+
+        print(f"\nError processing section: {section_name}")
+        print(e)
+        continue
+
+    # =========================
+    # MERGE RESULTS
+    # =========================
 
     for key, value in parsed.items():
-        if key in final_jd and value:
-            if isinstance(value, list):
-                final_jd[key].extend(value)   # flatten list
-            else:
+
+        if key not in final_jd:
+            continue
+
+        # technical_skills → list
+        if isinstance(value, list):
+
+            cleaned = [
+                str(v).strip()
+                for v in value
+                if str(v).strip()
+            ]
+
+            final_jd[key].extend(cleaned)
+
+        # other fields → strings
+        elif isinstance(value, str):
+
+            value = value.strip()
+
+            if value:
                 final_jd[key].append(value)
 
-# merge + deduplicate
-final_jd = {k: " ".join(dict.fromkeys(v)) for k, v in final_jd.items()}
+# =========================
+# DEDUPLICATION
+# =========================
 
-with open(r"processing_files\normalized_jd_sections.json", "w", encoding="utf-8") as f:
-    json.dump(final_jd, f, indent=4, ensure_ascii=False)
+final_jd = {
+    "technical_skills": "",
+    "experience": "",
+    "general": "",
+    "positions_of_responsibility": "",
+    "achievements": ""
+}
 
-print("Normalised structure formed")
+
+for key in final_jd:
+
+    final_jd[key] = " ".join(
+        dict.fromkeys(
+            final_jd[key].split()
+        )
+    )
+
+
+# =========================
+# SAVE OUTPUT
+# =========================
+
+output_path = r"processing_files\normalized_jd_sections.json"
+
+with open(
+    output_path,
+    "w",
+    encoding="utf-8"
+) as f:
+
+    json.dump(
+        final_jd,
+        f,
+        indent=4,
+        ensure_ascii=False
+    )
+
+print("\nNormalized structure formed successfully.")
+print(f"Saved to: {output_path}")
