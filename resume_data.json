@@ -25,9 +25,9 @@
             "location": "Indore, India",
             "employment_type": "Internship",
             "points": [
-                "Developed a retrieval-augmented generation system for academic paper summarization using Python and Pandas",
+                "Developed a retrieval-augmented generation system for academic paper summarization using AI and Machine Learning techniques",
                 "Built a FAISS-based vector store and experimented with chunking and embedding strategies using Sentence Transformers",
-                "Implemented evaluation scripts to benchmark retrieval accuracy across different configurations"
+                "Analysed and preprocessed a dataset of 12,000 research abstracts using Python and Pandas"
             ]
         },
         {
@@ -37,9 +37,9 @@
             "location": "Indore, India",
             "employment_type": "Internship",
             "points": [
-                "Developed a retrieval-augmented generation system for academic paper summarization using Python and Pandas",
+                "Developed a retrieval-augmented generation system for academic paper summarization using AI and Machine Learning techniques",
                 "Built a FAISS-based vector store and experimented with chunking and embedding strategies using Sentence Transformers",
-                "Implemented evaluation scripts to benchmark retrieval accuracy across different configurations"
+                "Analysed and preprocessed a dataset of 12,000 research abstracts using Python and Pandas"
             ]
         }
     ],
@@ -50,9 +50,9 @@
             "duration": "",
             "link": "",
             "points": [
-                "Built an end-to-end AI-powered resume tailoring platform that parses JD PDFs and generates JD-specific resume sections",
-                "Implemented FAISS-based semantic matching to score profile-JD relevance",
-                "Developed a multi-user profile memory system with Streamlit and MySQL"
+                "Built an end-to-end AI-powered resume tailoring platform that utilizes Llama 3.2 for semantic section normalization and Groq LLM for generating JD-specific resume sections",
+                "Implemented FAISS-based semantic matching to score profile-JD relevance, demonstrating expertise in predictive analytics and machine learning",
+                "Designed a multi-user profile memory system using Streamlit and MySQL, showcasing ability to integrate AI services with databases"
             ]
         },
         {
@@ -61,9 +61,9 @@
             "duration": "",
             "link": "",
             "points": [
-                "Built an NLP-based sentiment classifier for product reviews using TF-IDF vectorization and logistic regression",
-                "Preprocessed 50,000 Amazon review records and handled class imbalance using SMOTE",
-                "Achieved 89% accuracy and visualized sentiment distribution and model performance using Matplotlib and Seaborn"
+                "Developed an NLP-based sentiment classifier for product reviews using TF-IDF vectorization and logistic regression, achieving 89% accuracy on 50,000 Amazon review records",
+                "Implemented data preprocessing techniques, including handling class imbalance using SMOTE, to optimize model performance",
+                "Visualized sentiment distribution and model performance using Matplotlib and Seaborn, demonstrating data visualization skills"
             ]
         }
     ],
@@ -81,8 +81,8 @@
             "Ollama"
         ],
         "Languages": [
-            "C++",
-            "Python"
+            "Python",
+            "SQL"
         ],
         "NLP": [
             "LangChain",

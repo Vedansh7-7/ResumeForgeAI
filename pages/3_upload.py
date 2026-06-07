@@ -41,14 +41,25 @@ if uploaded_file:
 
             from main_pipeline import main_pipeline
 
-            pdf_path = main_pipeline(
+            pdf_path, match_scores = main_pipeline(
                 path=save_path,
                 user_id=st.session_state["user_id"],
                 user_name=st.session_state["user_name"],
                 progress_box=progress_box
             )
 
+            st.session_state["match_scores"] = match_scores
             progress_box.success("Resume generated successfully!")
+
+            scores = match_scores
+            st.write("---")
+            st.subheader("JD Match Score")
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Skills",     f"{scores.get('skills', 0)}%")
+            col2.metric("Experience", f"{scores.get('experience', 0)}%")
+            col3.metric("Projects",   f"{scores.get('projects', 0)}%")
+            col4.metric("Courses",    f"{scores.get('courses', 0)}%")
+            st.metric("Overall Match", f"{scores.get('overall', 0)}%")
 
             with open(pdf_path, "rb") as f:
                 st.download_button(
@@ -57,6 +68,8 @@ if uploaded_file:
                     file_name="resume.pdf",
                     mime="application/pdf",
                 )
+
+            
 
         except Exception as e:
             progress_box.error(f"Pipeline failed: {e}")

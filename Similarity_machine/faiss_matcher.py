@@ -60,28 +60,28 @@ def get_overall_match(sections: dict, weights: dict) -> dict:
 
 # ─── Example ───────────────────────────────────────
 
-sections = {
-    "skills":     ("Python, ML, SQL, pandas",        "Python, deep learning, numpy"),
-    "experience": ("3 years data engineering",        "2 years ML engineer"),
-    "education":  ("B.Tech Computer Science",         "B.Tech Information Technology"),
-    "projects":   ("Built recommendation system",     "Built image classifier"),
-}
-
-weights = {
-    "skills":     0.40,
-    "experience": 0.30,
-    "education":  0.15,
-    "projects":   0.15,
-}
-
-# ─── Call the function ────────────────────────────────────────
-output = get_overall_match(sections, weights)
-
-# output is a dict, example output:
-# {
-#   "skills":     78.4,
-#   "experience": 65.1,
-#   "education":  90.2,
-#   "projects":   55.7,
-#   "overall":    74.3
+# sections = {
+#     "skills":     ("Python, ML, SQL, pandas",        "Python, deep learning, numpy"),
+#     "experience": ("3 years data engineering",        "2 years ML engineer"),
+#     "education":  ("B.Tech Computer Science",         "B.Tech Information Technology"),
+#     "projects":   ("Built recommendation system",     "Built image classifier"),
 # }
+
+# weights = {
+#     "skills":     0.40,
+#     "experience": 0.30,
+#     "education":  0.15,
+#     "projects":   0.15,
+# }
+
+# # ─── Call the function ────────────────────────────────────────
+# output = get_overall_match(sections, weights)
+
+# # output is a dict, example output:
+# # {
+# #   "skills":     78.4,
+# #   "experience": 65.1,
+# #   "education":  90.2,
+# #   "projects":   55.7,
+# #   "overall":    74.3
+# # }

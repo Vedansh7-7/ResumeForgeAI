@@ -70,7 +70,58 @@ def main_pipeline(path, user_id, user_name, progress_box=None):
 
     print("JSON schema built.")
 
-    # ── Stage 6: Render PDF ────────────────────────────────────────────────
+# ── Stage 5.5: Compute JD-Profile Match Score ──────────────────────────
+    if progress_box:
+        progress_box.info("Stage 5.5/6: Computing JD match score...")
+
+    from Similarity_machine.faiss_matcher import get_overall_match
+    import json
+
+    with open("processing_files/normalized_jd_sections.json", "r", encoding="utf-8") as f:
+        jd_data = json.load(f)
+
+    # Extract user text directly from the built JSON
+    user_skills_text = " ".join(
+        skill
+        for skill_list in final_json.get("skills", {}).values()
+        for skill in skill_list
+    )
+
+    user_exp_text = " ".join(
+        point
+        for exp in final_json.get("experience", [])
+        for point in exp.get("points", [])
+    )
+
+    user_proj_text = " ".join(
+        point
+        for proj in final_json.get("projects", [])
+        for point in proj.get("points", [])
+    )
+
+    user_courses_text = " ".join(
+        course
+        for course_list in final_json.get("courses", {}).values()
+        for course in course_list
+    )
+
+    sections = {
+        "skills":     (jd_data.get("technical_skills", ""), user_skills_text),
+        "experience": (jd_data.get("experience", ""),       user_exp_text),
+        "projects":   (jd_data.get("technical_skills", ""), user_proj_text),
+        "courses":    (jd_data.get("technical_skills", ""), user_courses_text or user_skills_text),
+    }
+
+    weights = {
+        "skills":     0.40,
+        "experience": 0.30,
+        "projects":   0.20,
+        "courses":    0.10,
+    }
+
+    match_scores = get_overall_match(sections, weights)
+    print(f"Match scores: {match_scores}")
+
 # ── Stage 6: Render PDF ────────────────────────────────────────────────
     if progress_box:
         progress_box.info("Stage 6/6: Rendering PDF...")
@@ -92,4 +143,4 @@ def main_pipeline(path, user_id, user_name, progress_box=None):
 
     print(f"Resume generated: {pdf_path}")
 
-    return pdf_path
+    return pdf_path, match_scores
